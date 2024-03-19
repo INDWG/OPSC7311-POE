@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AppCompat.SplashScreen" parent="Theme.ProActive_OPSC7311_POE">
+        <item name="android:windowSplashScreenBackground">#FF0000</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_proactive_launcher</item>
+        <item name="android:windowSplashScreenAnimationDuration">4000</item>
+    </style>
+</resources>
