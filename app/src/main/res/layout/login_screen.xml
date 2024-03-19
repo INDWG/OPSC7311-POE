@@ -9,4 +9,8 @@
     android:background="@color/white"
     tools:context=".LoginScreen">
 
+
+
+
+
 </LinearLayout>
