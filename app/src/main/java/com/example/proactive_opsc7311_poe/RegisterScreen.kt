@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class RegisterScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +27,7 @@ class RegisterScreen : AppCompatActivity() {
     //perform more logic when backend is implemented
     fun btnRegisterClicked(view: View) {
         // Define the destination activity class
-        val destinationActivity = HomeScreen::class.java
+        val destinationActivity = MainScreen::class.java
 
         // Create an Intent to start the destination activity
         val intent = Intent(this, destinationActivity)
