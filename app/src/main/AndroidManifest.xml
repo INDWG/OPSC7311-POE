@@ -13,7 +13,13 @@
         android:theme="@style/Base.Theme.ProActive_OPSC7311_POE"
         tools:targetApi="31">
         <activity
-            android:name=".HomeScreen"
+            android:name=".ProgressScreen"
+            android:exported="false" />
+        <activity
+            android:name=".AddScreen"
+            android:exported="false" />
+        <activity
+            android:name=".MainScreen"
             android:exported="false" />
         <activity
             android:name=".RegisterScreen"
