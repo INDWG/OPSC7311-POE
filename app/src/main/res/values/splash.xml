@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.AppCompat.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.AppCompat.SplashScreen" parent="Theme.AppCompat.NoActionBar">
         <!-- Splash screen background color -->
         <item name="android:windowSplashScreenBackground">@color/proactive_red</item>
 
