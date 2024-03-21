@@ -69,22 +69,41 @@
                     android:layout_gravity="right" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <FrameLayout
                 android:id="@+id/profilePictureLayout"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:layout_gravity="center">
 
-                <ImageButton
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/profilePicture"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@drawable/account_icon"
                     android:background="@drawable/profile_picture_chooser"
                     android:scaleType="centerCrop"
-                    android:layout_centerInParent="true"
-                    android:onClick="btnChooseProfilePicture"/>
-            </RelativeLayout>
+                    android:layout_gravity="center"
+                    android:onClick="openImagePicker"/>
+
+                <ImageView
+                    android:id="@+id/cameraImageView"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/camera_icon"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/profile_picture_chooser"
+                    android:scaleType="centerInside" />
+
+                <ImageView
+                    android:id="@+id/captureImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profilePictureLayout"
+                    android:src="@drawable/camera_icon"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone" />
+            </FrameLayout>
+
 
             <View
                 android:id="@+id/profileDivider"
