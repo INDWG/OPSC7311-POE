@@ -41,7 +41,8 @@
             app:itemIconSize="20dp"
             app:menu="@menu/navigation_bar"
             app:labelVisibilityMode="unlabeled"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            android:background="@drawable/rounded_bottom_navigation_background"/>
     </LinearLayout>
 
 </FrameLayout>

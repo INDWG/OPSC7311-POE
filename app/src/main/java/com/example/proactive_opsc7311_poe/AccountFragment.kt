@@ -73,4 +73,8 @@ class AccountFragment : Fragment() {
     private fun openDateClicker() {
         datePickerDialog.show()
     }
+
+    fun btnChooseProfilePicture(view: View) {
+
+    }
 }
