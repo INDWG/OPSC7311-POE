@@ -42,7 +42,6 @@ class AccountFragment : Fragment() {
     private lateinit var imageView: ImageView
 
     private val CAMERA_PERMISSION_REQUEST_CODE = 101
-    private var isCameraPermissionGranted: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,10 +73,9 @@ class AccountFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                isCameraPermissionGranted = true
                 showImagePickerDialog()
             } else {
-                isCameraPermissionGranted = false
+
             }
         }
     }
@@ -173,7 +171,7 @@ class AccountFragment : Fragment() {
     private fun showImagePickerDialog() {
         AlertDialog.Builder(requireContext())
             .setTitle("Profile Picture")
-            .setMessage("Select an option")
+            .setMessage("Select an option:")
             .setPositiveButton("Take Photo") { _, _ ->
                 // Launch camera app to take a photo
                 val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
