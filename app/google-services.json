@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "657848833636",
+    "project_id": "proactive-d2048",
+    "storage_bucket": "proactive-d2048.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657848833636:android:09d5407eacba031c067171",
+        "android_client_info": {
+          "package_name": "com.example.proactive_opsc7311_poe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNJy5aCf4a5IQraMRlFqTDe1dWKMBgFhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".AccountFragment">
+    tools:context=".controllers.AccountFragment">
 
     <RelativeLayout
         android:id="@+id/main"
@@ -20,14 +20,15 @@
             android:textColor="#FFFFFF" />
 
         <Button
-            android:id="@+id/helpButton"
+            android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="Logout"
             android:textColor="#FFFFFF"
             android:background="@android:color/transparent"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:onClick="btnLogoutClicked"/>
 
         <View
             android:id="@+id/titleDivider"
@@ -57,7 +58,7 @@
                     android:textColor="#FFFFFF" />
 
                 <Button
-                    android:id="@+id/deleteButton"
+                    android:id="@+id/btnDelete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -66,7 +67,8 @@
                     android:textColor="#FF0000"
                     android:background="@android:color/transparent"
                     android:layout_marginTop="-14dp"
-                    android:layout_gravity="right" />
+                    android:layout_gravity="right"
+                    android:onClick="btnDeleteClicked"/>
             </RelativeLayout>
 
             <FrameLayout
@@ -132,7 +134,6 @@
                     android:id="@+id/firstNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Joshua"
                     android:textSize="16dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,7 +154,6 @@
                     android:id="@+id/lastNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ashley"
                     android:textSize="16dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -225,19 +225,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:editable="false"
-                    android:text="ashleyj1404@gmail.com"
                     android:textSize="16dp"
                     android:layout_marginBottom="60dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Save Button-->
             <Button
-                android:id="@+id/saveButton"
+                android:id="@+id/btnSaveButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save"
                 android:background="@drawable/button"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:onClick="btnSaveButtonClicked"/>
         </LinearLayout>
 
     </RelativeLayout>

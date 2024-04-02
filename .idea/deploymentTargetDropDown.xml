@@ -4,6 +4,18 @@
     <value>
       <entry key="app">
         <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-R52TB08D9LM-HchLFr._adb-tls-connect._tcp" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-04-02T14:57:57.697942200Z" />
           <runningDeviceTargetsSelectedWithDialog>
             <Target>
               <type value="RUNNING_DEVICE_TARGET" />
