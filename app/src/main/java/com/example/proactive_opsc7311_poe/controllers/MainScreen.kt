@@ -107,7 +107,4 @@ class MainScreen : AppCompatActivity()
         val intent = Intent(this, activityClass)
         startActivity(intent)
     }
-
-
-
 }
