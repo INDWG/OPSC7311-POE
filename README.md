@@ -20,3 +20,10 @@ To install ProActive, follow these simple steps:
 
 ## Usage
 
+After installing the app, start by setting up your user profile and fitness goals. Navigate through the following sections:
+
+- **Dashboard**: Overview of your daily activities and achievements.
+- **Workouts**: Access your workout logs and add new ones.
+- **Plans**: Manage your custom workout plans.
+- **Settings**: Customize your app settings, such as notifications and account information.
+For more details on how to use each feature, visit the Help section within the app.
