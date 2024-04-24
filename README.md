@@ -29,6 +29,7 @@ After installing the app, start by setting up your user profile and fitness goal
 For more details on how to use each feature, visit the Help section within the app.
 
 ##Support
+
 For support, please email TeamProActive225@gmail.com
 
 ##Authors
