@@ -28,11 +28,11 @@ After installing the app, start by setting up your user profile and fitness goal
 - **Settings**: Customize your app settings, such as notifications and account information.
 For more details on how to use each feature, visit the Help section within the app.
 
-##Support
+## Support
 
 For support, please email TeamProActive225@gmail.com
 
-##Authors
+## Authors
 
 - **FrontEnd** - Dane Govender - INDWG
 - **FrontEnd** - Gerard Govender - INDWG
