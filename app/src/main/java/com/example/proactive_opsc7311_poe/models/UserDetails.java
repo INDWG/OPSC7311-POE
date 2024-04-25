@@ -2,8 +2,7 @@ package com.example.proactive_opsc7311_poe.models;
 
 import java.util.Date;
 
-public class UserDetails
-{
+public class UserDetails {
     private String UID;
     private String firstname;
     private String lastname;
