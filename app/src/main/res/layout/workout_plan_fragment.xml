@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.MainScreen">
+    tools:context=".controllers.WorkOutPlanFragment">
 
 
     <LinearLayout
@@ -26,7 +26,8 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@drawable/button"
-                android:src="@android:drawable/ic_media_previous" />
+                android:src="@android:drawable/ic_media_previous"
+                android:onClick="btnBackClicked"/>
 
             <!-- Spacer view to push buttons to either end -->
             <View
@@ -41,7 +42,6 @@
                 android:layout_height="48dp"
                 android:text="Help"
                 android:textColor="#FFFFFF"
-
                 android:onClick="btnHelpClicked"/>
 
         </LinearLayout>
@@ -106,11 +106,6 @@
             android:textColor="@android:color/white"
             android:layout_marginTop="8dp"/>
 
-        <!-- Description Input -->
-
-        <!-- Create Workout Button -->
-
-
         <EditText
             android:id="@+id/editDescription"
             android:layout_width="match_parent"
@@ -128,6 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create Workout"
+            android:textAllCaps="false"
             android:background="@drawable/button"
             android:layout_marginTop="16dp"/>
 

@@ -24,6 +24,8 @@ class ViewWorkoutFragment : Fragment()
 
     private val workouts = mutableListOf<Workout>()
 
+    private lateinit var startWorkout: Button
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View?
@@ -110,5 +112,27 @@ class ViewWorkoutFragment : Fragment()
         val adapter = WorkoutAdapter(workouts)
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = LinearLayoutManager(context)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        super.onViewCreated(view, savedInstanceState)
+
+        startWorkout =
+            view.findViewById(R.id.btnStartWorkout)
+        startWorkout.setOnClickListener {
+            btnStartWorkoutClicked(this)
+        }
+    }
+
+    fun btnStartWorkoutClicked(fragment: Fragment)
+    {
+        navigateToFragment(WorkOutPlanFragment())
+    }
+
+    private fun navigateToFragment(fragment: Fragment) {
+        // Replace the current fragment with the new fragment
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }

@@ -17,8 +17,6 @@ class MainScreen : AppCompatActivity()
         enableEdgeToEdge()
         setContentView(R.layout.main_screen)
 
-
-
         setRelativeSizes()
 
         //set to this on startup
