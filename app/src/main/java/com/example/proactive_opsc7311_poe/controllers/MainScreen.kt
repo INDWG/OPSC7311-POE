@@ -38,7 +38,7 @@ class MainScreen : AppCompatActivity()
 
                 R.id.add ->
                 {
-
+                    navigateToFragment(ViewWorkoutFragment())
                     true
                 }
 
