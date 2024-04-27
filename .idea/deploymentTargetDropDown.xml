@@ -3,51 +3,7 @@
   <component name="deploymentTargetDropDown">
     <value>
       <entry key="app">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Joshua\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-27T11:48:57.691312800Z" />
-          <runningDeviceTargetsSelectedWithDialog>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="adb-R52TB08D9LM-HchLFr._adb-tls-connect._tcp" />
-                </Key>
-              </deviceKey>
-            </Target>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Joshua\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetsSelectedWithDialog>
-          <targetsSelectedWithDialog>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Joshua\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetsSelectedWithDialog>
-        </State>
+        <State />
       </entry>
     </value>
   </component>

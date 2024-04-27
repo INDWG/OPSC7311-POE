@@ -1,0 +1,137 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controllers.MainScreen">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+
+            android:gravity="center_vertical">
+
+            <!-- Back Button -->
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/button"
+                android:src="@android:drawable/ic_media_previous" />
+
+            <!-- Spacer view to push buttons to either end -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Help Button -->
+            <Button
+                android:id="@+id/btnHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:text="Help"
+                android:textColor="#FFFFFF"
+
+                android:onClick="btnHelpClicked"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:padding="16dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start a new Workout Plan,"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:textColor="@color/proactive_red"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Workout Name:"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Workout Name Input -->
+        <EditText
+            android:id="@+id/editWorkoutName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/textfield"
+            android:hint="Give your workout a neat name"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#A9A9A9" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description:"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Description Input -->
+
+        <!-- Create Workout Button -->
+
+
+        <EditText
+            android:id="@+id/editDescription"
+            android:layout_width="match_parent"
+            android:layout_height="166dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/textfield"
+            android:hint="Give your workout and interesting description of no more than 150 character in length"
+            android:gravity="top|start"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#A9A9A9" />
+
+        <Button
+            android:id="@+id/btnCreateWorkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Workout"
+            android:background="@drawable/button"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>
