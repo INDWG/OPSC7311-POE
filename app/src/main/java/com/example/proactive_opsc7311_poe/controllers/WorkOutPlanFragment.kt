@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.proactive_opsc7311_poe.R
 import com.google.firebase.Firebase
@@ -19,8 +21,12 @@ class WorkOutPlanFragment : Fragment()
     private val db = Firebase.firestore
 
     private lateinit var helpButton: Button
-
+    private lateinit var createWorkoutButton: Button
     private lateinit var backButton: ImageButton
+
+    private lateinit var workoutNameEditText: EditText
+    private lateinit var workoutDescriptionEditText: EditText
+    private var userId: String? = null
 
 
     override fun onCreateView(
@@ -28,6 +34,9 @@ class WorkOutPlanFragment : Fragment()
     ): View?
     {
         val view = inflater.inflate(R.layout.workout_plan_fragment, container, false)
+
+        workoutNameEditText = view.findViewById(R.id.editWorkoutName)
+        workoutDescriptionEditText = view.findViewById(R.id.editDescription)
 
         readData()
 
@@ -39,7 +48,7 @@ class WorkOutPlanFragment : Fragment()
         val user = FirebaseAuth.getInstance().currentUser
 
         user?.let { currentUser ->
-            val userId = currentUser.uid
+            userId = currentUser.uid
 
             db.collection("users").whereEqualTo("uid", userId).get()
                 .addOnSuccessListener { querySnapshot ->
@@ -80,6 +89,90 @@ class WorkOutPlanFragment : Fragment()
         backButton.setOnClickListener {
             btnBackClicked(this)
         }
+
+        createWorkoutButton =
+            view.findViewById(R.id.btnCreateWorkout)
+        createWorkoutButton.setOnClickListener {
+            btnCreateWorkoutClicked(this)
+        }
+    }
+
+    fun btnCreateWorkoutClicked(fragment: Fragment) {
+        val workoutName = workoutNameEditText.text.toString().trim()
+        val workoutDescription = workoutDescriptionEditText.text.toString().trim()
+
+        // Validation for name and description length
+        when {
+            workoutName.isEmpty() || workoutDescription.isEmpty() -> {
+                Toast.makeText(
+                    fragment.requireContext(), "Please enter workout details before saving.", Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+            workoutName.length >= 50 -> {
+                Toast.makeText(
+                    fragment.requireContext(), "Please ensure workout name character length no more than 50.", Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+            workoutDescription.length >= 150 -> {
+                Toast.makeText(
+                    fragment.requireContext(), "Please ensure workout description character length no more than 150.", Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+        }
+
+        val workoutDetails = hashMapOf(
+            "name" to workoutName,
+            "description" to workoutDescription,
+            "progress" to 0,
+            "total-exercises" to 0
+        )
+
+        userId?.let { uid ->
+
+            db.collection("users").whereEqualTo("uid", userId).get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty)
+                    {
+                        val userDocumentRef = querySnapshot.documents[0].reference
+                        val workoutsCollectionRef = userDocumentRef.collection("workouts")
+
+                        // Check if the user document exists before adding the workout
+                        userDocumentRef.get()
+                            .addOnSuccessListener { documentSnapshot ->
+                                if (documentSnapshot.exists()) {
+                                    // User document exists, add the workout details to the "workouts" collection
+                                    workoutsCollectionRef.add(workoutDetails)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                fragment.requireContext(), "Added new workout: $workoutName", Toast.LENGTH_SHORT
+                                            ).show()
+                                            workoutNameEditText.setText("")
+                                            workoutDescriptionEditText.setText("")
+                                            navigateToFragment(ViewWorkoutFragment())
+                                        }
+                                        .addOnFailureListener {
+                                            Toast.makeText(
+                                                fragment.requireContext(), "Error while adding new workout.", Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                } else {
+                                    // User document does not exist, handle accordingly
+                                    Toast.makeText(
+                                        fragment.requireContext(), "User document does not exist.", Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(
+                                    fragment.requireContext(), "Error checking user document.", Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
+                }
+        }
     }
 
     fun btnHelpClicked(fragment: Fragment)
@@ -91,6 +184,7 @@ class WorkOutPlanFragment : Fragment()
     {
         navigateToFragment(ViewWorkoutFragment())
     }
+
     private fun navigateToFragment(fragment: Fragment) {
         // Replace the current fragment with the new fragment
         parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)

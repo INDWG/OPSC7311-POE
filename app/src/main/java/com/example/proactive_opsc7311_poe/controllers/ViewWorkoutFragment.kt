@@ -85,7 +85,7 @@ class ViewWorkoutFragment : Fragment()
                                         workoutDocument.getLong("total-exercises")?.toInt() ?: 0
 
                                     // Check if the workout is completed, if so, skip adding it to the list
-                                    if (workoutProgress != totalExercises)
+                                    if ((workoutProgress != totalExercises) || (workoutProgress == 0 && totalExercises == 0))
                                     {
                                         val workoutName = workoutDocument.getString("name") ?: ""
                                         val workoutDescription =
