@@ -25,8 +25,7 @@
                 android:id="@+id/btnBack"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/button"
-                android:src="@android:drawable/ic_media_previous"
+                android:background="@drawable/back_button"
                 android:onClick="btnBackClicked"/>
 
             <!-- Spacer view to push buttons to either end -->
