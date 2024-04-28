@@ -42,7 +42,7 @@ class MainScreen : AppCompatActivity()
 
                 R.id.progress ->
                 {
-
+                    navigateToFragment(ViewExerciseFragment())
                     true
                 }
 

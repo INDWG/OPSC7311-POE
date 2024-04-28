@@ -112,7 +112,7 @@
             android:layout_height="166dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/textfield"
-            android:hint="Give your workout and interesting description of no more than 150 character in length"
+            android:hint="Give your workout an interesting description of no more than 150 characters in length."
             android:gravity="top|start"
             android:padding="10dp"
             android:textColor="@color/black"
