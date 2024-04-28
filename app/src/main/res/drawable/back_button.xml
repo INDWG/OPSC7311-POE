@@ -5,7 +5,7 @@
         <layer-list>
             <item>
                 <shape android:shape="oval">
-                    <solid android:color="#D3D3D3"/> <!-- Pressed color -->
+                    <solid android:color="#FF3030"/> <!-- Pressed color -->
                 </shape>
             </item>
             <item android:drawable="@drawable/arrow_back" android:gravity="center"/>
