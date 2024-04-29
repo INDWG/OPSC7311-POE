@@ -28,7 +28,7 @@
     <ProgressBar
         android:id="@+id/progressBarWorkout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_marginBottom="8dp"
         android:progressDrawable="@drawable/seeker_custom_progress" />

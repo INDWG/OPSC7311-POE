@@ -145,7 +145,15 @@ class WorkOutPlanFragment : Fragment()
                                 if (documentSnapshot.exists()) {
                                     // User document exists, add the workout details to the "workouts" collection
                                     workoutsCollectionRef.add(workoutDetails)
-                                        .addOnSuccessListener {
+                                        .addOnSuccessListener { documentReference ->
+                                            val workoutID = documentReference.id
+
+                                            documentReference.update(
+                                                mapOf(
+                                                    "workoutID" to workoutID
+                                                )
+                                            )
+
                                             Toast.makeText(
                                                 fragment.requireContext(), "Added new workout: $workoutName", Toast.LENGTH_SHORT
                                             ).show()

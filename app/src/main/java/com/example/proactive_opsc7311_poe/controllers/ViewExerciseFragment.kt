@@ -13,9 +13,10 @@ import androidx.fragment.app.Fragment
 import com.example.proactive_opsc7311_poe.R
 import com.example.proactive_opsc7311_poe.models.Exercise
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-import com.google.type.DateTime
+import com.google.type.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -61,9 +62,9 @@ class ViewExerciseFragment : Fragment()
         progressPhotoView.clipToOutline = true
 
         // Dummy data for DateTime, replace with actual DateTime objects as needed
-        val dummyDate = DateTime.newBuilder().setYear(2024).setMonth(4).setDay(28).build()
-        val dummyStartTime = DateTime.newBuilder().setHours(9).setMinutes(0).setSeconds(0).build()
-        val dummyEndTime = DateTime.newBuilder().setHours(10).setMinutes(0).setSeconds(0).build()
+        val dummyDate = Date.newBuilder().setYear(2024).setMonth(4).setDay(28).build()
+        val dummyStartTime = Timestamp.now()
+        val dummyEndTime = Timestamp.now()
 
         // Creating a new Exercise object with dummy data
         val newExercise = Exercise(
@@ -101,7 +102,7 @@ class ViewExerciseFragment : Fragment()
         val calendar = Calendar.getInstance()
         calendar.set(
             exercise.date.year, exercise.date.month - 1, // Calendar.MONTH is zero-based
-            exercise.date.day, exercise.date.hours, exercise.date.minutes, exercise.date.seconds
+            exercise.date.day
         )
         val date = calendar.time
 
