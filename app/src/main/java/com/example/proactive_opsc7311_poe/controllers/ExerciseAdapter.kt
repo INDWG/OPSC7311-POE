@@ -36,12 +36,12 @@ class ExerciseAdapter(
 
         init {
             itemView.setOnClickListener {
-                val exerciseName = exercises[adapterPosition].name
-                exerciseClickListener.onExerciseClicked(exerciseName)
+                val exerciseID = exercises[adapterPosition].exerciseID
+                exerciseClickListener.onExerciseClicked(exerciseID)
             }
             logTimeButton.setOnClickListener {
-                val exerciseName = exercises[adapterPosition].name
-                logTimeClickListener.onLogTimeClicked(exerciseName)
+                val exerciseID = exercises[adapterPosition].name
+                logTimeClickListener.onLogTimeClicked(exerciseID)
             }
         }
 
@@ -54,9 +54,9 @@ class ExerciseAdapter(
 }
 
 interface OnExerciseClickListener {
-    fun onExerciseClicked(exerciseName: String)
+    fun onExerciseClicked(exerciseID: String)
 }
 
 interface OnLogTimeClickListener {
-    fun onLogTimeClicked(exerciseName: String)
+    fun onLogTimeClicked(exerciseID: String)
 }

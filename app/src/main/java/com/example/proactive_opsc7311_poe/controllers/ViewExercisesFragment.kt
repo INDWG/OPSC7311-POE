@@ -137,6 +137,7 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
                                         .addOnSuccessListener { exercisesSnapshot ->
                                             exercises.clear()
                                             for (exerciseDocument in exercisesSnapshot.documents) {
+                                                val exerciseID = exerciseDocument.getString("exerciseID") ?: ""
                                                 val exerciseName = exerciseDocument.getString("name") ?: ""
                                                 val exerciseDescription = exerciseDocument.getString("description") ?: ""
                                                 val exerciseImage = exerciseDocument.getString("image") ?: ""
@@ -150,6 +151,7 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
                                                 val exerciseLoggedTime = exerciseDocument.getLong("loggedTime")?.toInt() ?: 0
                                                 val exerciseGoalsMet = exerciseDocument.getBoolean("goalsMet") ?: false
                                                 val exercise = Exercise(
+                                                    exerciseID,
                                                     exerciseName,
                                                     exerciseDescription,
                                                     exerciseImage,

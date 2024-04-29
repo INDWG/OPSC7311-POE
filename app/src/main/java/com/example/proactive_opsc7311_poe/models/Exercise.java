@@ -5,6 +5,7 @@ import com.google.type.Date;
 
 public class Exercise {
 
+    private String exerciseID;
     private String name;
     private String description;
     private String image;
@@ -17,7 +18,8 @@ public class Exercise {
     private int loggedTime;
     private boolean goalsMet;
 
-    public Exercise(String name, String description, String image, Date date, Timestamp startTime, Timestamp endTime, String category, int min, int max) {
+    public Exercise(String exerciseID, String name, String description, String image, Date date, Timestamp startTime, Timestamp endTime, String category, int min, int max) {
+        this.exerciseID = exerciseID;
         this.name = name;
         this.description = description;
         this.image = image;
@@ -27,6 +29,14 @@ public class Exercise {
         this.category = category;
         this.min = min;
         this.max = max;
+    }
+
+    public String getExerciseID() {
+        return exerciseID;
+    }
+
+    public void setExerciseID(String exerciseID) {
+        this.exerciseID = exerciseID;
     }
 
     public String getName() {
