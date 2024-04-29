@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,11 +18,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), OnWorkoutClickListener {
 
     private val db = Firebase.firestore
-
-    private lateinit var workoutItem: Button
 
     private val workouts = mutableListOf<Workout>()
 
@@ -35,7 +32,7 @@ class HomeFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewWorkouts)
 
         // Assuming you have an adapter class named 'WorkoutAdapter'
-        val adapter = WorkoutAdapter(workouts)
+        val adapter = WorkoutAdapter(workouts,this)
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context) // or GridLayoutManager(context, numberOfColumns)
@@ -47,6 +44,18 @@ class HomeFragment : Fragment() {
         readData()
 
         return view
+    }
+
+    override fun onWorkoutClicked(workoutName: String) {
+        val fragment = ViewExercisesFragment().apply {
+            arguments = Bundle().apply {
+                putString("workout_name", workoutName)
+            }
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     // Function to get current date in readable format
@@ -88,7 +97,7 @@ class HomeFragment : Fragment() {
                         userDocRef.collection("workouts").get()
                             .addOnSuccessListener { workoutsSnapshot ->
                                 for (workoutDocument in workoutsSnapshot.documents) {
-                                    val workoutId = workoutDocument.id
+                                    val workoutId = workoutDocument.getString("workoutID") ?: ""
                                     val workoutProgress = workoutDocument.getLong("progress")?.toInt() ?: 0
                                     val totalExercises = workoutDocument.getLong("total-exercises")?.toInt() ?: 0
 
@@ -108,13 +117,25 @@ class HomeFragment : Fragment() {
                                                             val workoutName = workoutDocument.getString("name") ?: ""
                                                             val workoutDescription = workoutDocument.getString("description") ?: ""
 
-                                                            val newWorkout = Workout(workoutName, workoutDescription, workoutProgress, totalExercises)
+                                                            val newWorkout = Workout(workoutId, workoutName, workoutDescription, workoutProgress, totalExercises)
 
-                                                            workouts.add(newWorkout)
+                                                            var exists = false
+
+                                                            for (workout in workouts)
+                                                            {
+                                                                if (workout.workoutID == newWorkout.workoutID)
+                                                                {
+                                                                    exists = true
+                                                                }
+                                                            }
+
+                                                            if (!exists)
+                                                            {
+                                                                workouts.add(newWorkout)
+                                                            }
                                                         }
-                                                        // Update the RecyclerView with the retrieved workouts
-                                                        updateRecyclerView(workouts)
                                                     }
+                                                    updateRecyclerView(workouts)
                                                 }
                                             }
                                     }
@@ -131,7 +152,7 @@ class HomeFragment : Fragment() {
 
     private fun updateRecyclerView(workouts: List<Workout>) {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewWorkouts)
-        val adapter = WorkoutAdapter(workouts)
+        val adapter = WorkoutAdapter(workouts, this)
         recyclerView?.adapter = adapter
         recyclerView?.layoutManager = LinearLayoutManager(context)
     }

@@ -1,22 +1,23 @@
 package com.example.proactive_opsc7311_poe.models;
 
-import com.google.type.DateTime;
+import com.google.firebase.Timestamp;
+import com.google.type.Date;
 
 public class Exercise {
 
     private String name;
     private String description;
     private String image;
-    private DateTime date;
-    private DateTime startTime;
-    private DateTime endTime;
+    private Date date;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private String category;
     private int min;
     private int max;
     private int loggedTime;
     private boolean goalsMet;
 
-    public Exercise(String name, String description, String image, DateTime date, DateTime startTime, DateTime endTime, String category, int min, int max) {
+    public Exercise(String name, String description, String image, Date date, Timestamp startTime, Timestamp endTime, String category, int min, int max) {
         this.name = name;
         this.description = description;
         this.image = image;
@@ -52,27 +53,27 @@ public class Exercise {
         this.image = image;
     }
 
-    public DateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public DateTime getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(DateTime startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public DateTime getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(DateTime endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 

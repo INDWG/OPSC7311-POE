@@ -1,6 +1,5 @@
 package com.example.proactive_opsc7311_poe.controllers
 
-import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.proactive_opsc7311_poe.R
 import com.example.proactive_opsc7311_poe.models.Workout
 
-class WorkoutAdapter(private val workouts: List<Workout>) : RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
+class WorkoutAdapter(private val workouts: List<Workout>, private val workoutClickListener: OnWorkoutClickListener) : RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_workout, parent, false)
@@ -31,20 +30,9 @@ class WorkoutAdapter(private val workouts: List<Workout>) : RecyclerView.Adapter
 
         init {
             itemView.setOnClickListener {
-                val workoutName = workouts[adapterPosition].name
-                workoutItemClicked(itemView, workoutName)
+                val workoutID = workouts[adapterPosition].workoutID
+                workoutClickListener.onWorkoutClicked(workoutID)
             }
-        }
-
-        private fun workoutItemClicked(view: View, workoutName: String) {
-            // Display the message dialog
-            AlertDialog.Builder(view.context)
-                .setTitle("Workout Clicked")
-                .setMessage("You clicked on: $workoutName")
-                .setPositiveButton("OK") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
         }
 
         fun bind(workout: Workout) {
@@ -56,4 +44,8 @@ class WorkoutAdapter(private val workouts: List<Workout>) : RecyclerView.Adapter
             progressBar.isEnabled = false
         }
     }
+}
+
+interface OnWorkoutClickListener {
+    fun onWorkoutClicked(workoutID: String)
 }
