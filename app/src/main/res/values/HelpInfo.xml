@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="defualt_help_title">Default Return</string>
+    <string name="help_title_home_page">Home Page</string>
+    <string name="help_title_choose_workout_plan">Choose a Workout Plan</string>
+    <string name="help_title_new_workout_plan">Start a new Workout Plan</string>
+    <string name="help_title_exercise_page">Exercise Page</string>
+    <string name="help_title_add_exercise">Exercise Page – Add Exercise</string>
+    <string name="help_title_view_exercise_stats">View Exercise - stats</string>
+    <string name="help_title_log_exercise_data">Exercise Page - log data</string>
+    <string name="help_title_progress_charts">Progress charts</string>
+    <string name="help_title_view_workouts_and_exercises">View Workouts and exercises</string>
+    <string name="help_title_edit_profile_page">Edit Profile Page</string>
+
+    <string name="default_help_content">Default Return</string>
+    <string name="help_content_home_page">If your home screen is unpopulated, head to the Workout Screen and create a new Workout Plan.
+        \nOnce your workout plans are created the home screen will be populated with all the workouts with exercises that you will have to do at that day. </string>
+    <string name="help_content_choose_workout_plan">If there are no active workouts visible, select the start Workout button to create a new workout plan.
+\nIf your screen is populated this means you have active workout cards available this is identifiable by the progression bar not being completed.
+        \nInactive workouts have completed progress bars and will not show on this but instead can be found on the view workout and exercises screen. </string>
+    <string name="help_content_new_workout_plan">Enter your workout name and description to create a new workout.
+\nExample:
+\n
+\nChest and Shoulders
+\n
+\n
+\nLalalala chest and shoulders at virgin active gateway </string>
+    <string name="help_content_exercise_page">
+If your exercise screen is unpopulated select the start exercise button to add a new exercise.
+\nIf your screen is populated you can view your exercises for that workout and be able log time completed for that exercise</string>
+    <string name="help_content_add_exercise">On the Add exercise screen you have the option to choose or take a progress photo, you can enter the exercise name, exercise description, date of the exercise, start and end time of the exercise, daily min/max goal and an exercise category with the options of cardio, core, arms, back, chest or legs. These will be the fields to add a new exercise to the chosen workout. </string>
+    <string name="help_content_view_exercise_stats">Here you can view your exercises with a visual format, it will display the exercise date, a tick or cross if you have completed the exercise, the time it took to complete the exercise.\nThe category and the stats, you can also edit or delete the exercise.</string>
+    <string name="help_content_log_exercise_data">Here you can log an exercise with the time it took to complete the exercise. You can view the exercise name and the daily min / max goals. </string>
+    <string name="help_content_progress_charts">Here you can view 2 progress visualisation charts ( Daily Progress chart and Monthly Progress chart).
+\nDaily progress chart requires user input of a date range to display a bar chart of the daily minimum goal.
+\n
+\nThe monthly progress chart displays all days where the user logged a daily time that was between the daily min / max goals with a tick in the form of a calendar chart</string>
+    <string name="help_content_view_workouts_and_exercises">Here users will choose between workouts or exercises and a date range to view (active / inactive) workouts or exercises between the desired date range. If workouts are chosen the total hours of logged time will be displayed </string>
+    <string name="help_content_edit_profile_page">The Edit profile screen is used to change information details pertaining to you. Here you can add a profile picture, change you Name and Surname, set gender and birthday </string>
+</resources>
