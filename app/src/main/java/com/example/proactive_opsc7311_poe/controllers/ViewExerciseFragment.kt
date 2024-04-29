@@ -68,6 +68,7 @@ class ViewExerciseFragment : Fragment()
 
         // Creating a new Exercise object with dummy data
         val newExercise = Exercise(
+            "dwudvwuv",
             "1500m Warmup", // name
             "Warming up for 1500m.", // description
             "image_url", // image
