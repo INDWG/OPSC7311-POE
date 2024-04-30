@@ -17,9 +17,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import com.google.type.Date
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClickListener {
 
@@ -27,9 +25,6 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
     private lateinit var exerciseAdapter: ExerciseAdapter
     private lateinit var exerciseName: TextView
     private lateinit var backButton: ImageButton
-
-    private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    private val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
 
     private val exercises = mutableListOf<Exercise>()
 
@@ -81,8 +76,17 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
             .commit()
     }
 
-    override fun onLogTimeClicked(exerciseName: String) {
-        // Handle navigation to log time page
+    override fun onLogTimeClicked(exerciseID: String) {
+        val fragment = LoggedTimeFragment().apply {
+            arguments = Bundle().apply {
+                putString("exercise_id", exerciseID)
+                putString("workout_id", workoutID)
+            }
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     // Utility function to convert Timestamp to com.google.type.Date
@@ -94,13 +98,6 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
             .setMonth(calendar.get(Calendar.MONTH) + 1) // Calendar.MONTH is zero-based
             .setDay(calendar.get(Calendar.DAY_OF_MONTH))
             .build()
-    }
-
-    // Utility function to convert com.google.type.Date to java.util.Date
-    fun dateToUtilDate(date: Date): java.util.Date {
-        val calendar = Calendar.getInstance()
-        calendar.set(date.year, date.month - 1, date.day) // Calendar.MONTH is zero-based
-        return calendar.time
     }
 
     private fun readData(workoutID: String) {

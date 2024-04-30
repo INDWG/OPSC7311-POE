@@ -47,6 +47,7 @@
         android:layout_height="35dp"
         android:background="@drawable/button"
         android:text="Log Exercise Time"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:layout_marginHorizontal="40dp"/>
 
 </LinearLayout>
