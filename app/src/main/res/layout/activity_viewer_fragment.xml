@@ -22,14 +22,6 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <!-- Back Button -->
-                <ImageButton
-                    android:id="@+id/btnBack"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/back_button"
-                    android:onClick="btnBackClicked"/>
-
                 <!-- Spacer view to push buttons to either end -->
                 <View
                     android:layout_width="0dp"
@@ -92,7 +84,7 @@
                 <Spinner
                     android:id="@+id/spinnerWorkoutsExercises"
                     android:layout_width="match_parent"
-                    android:layout_height="53dp"
+                    android:layout_height="50dp"
                     android:layout_margin="16dp"
                     android:background="@drawable/button"
                     android:prompt="@string/select_workout_exercise_prompt"
@@ -101,35 +93,34 @@
                 <Button
                     android:id="@+id/btnSelectDateRange"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_margin="16dp"
                     android:background="@drawable/button"
                     android:onClick="showDateRangePickerDialog"
-                    android:text="@string/select_date_range" />
+                    android:text="@string/select_date_range"
+                    android:textAllCaps="false"/>
 
                 <!-- RecyclerView for workouts -->
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewWorkouts"
+                    android:id="@+id/workoutRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:clipToPadding="false"
                     android:padding="16dp"
-                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_time_workout"/>
+                    tools:listitem="@layout/item_workout"/>
 
                 <!-- RecyclerView for exercises -->
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewExercises"
+                    android:id="@+id/exerciseRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:clipToPadding="false"
                     android:padding="16dp"
-                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_date_exercise" />
+                    tools:listitem="@layout/item_exercise" />
 
             </LinearLayout>
         </LinearLayout>

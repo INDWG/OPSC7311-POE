@@ -1,7 +1,4 @@
 package com.example.proactive_opsc7311_poe.controllers
-import java.util.Calendar
-import android.app.DatePickerDialog
-import android.widget.Toast
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -113,36 +110,5 @@ class MainScreen : AppCompatActivity()
     fun btnBackClicked(view: View)
     {
         navigateToFragment(ViewWorkoutFragment())
-    }
-
-    // Method to show DatePicker in Activity Viewer Fragment
-    fun showDateRangePickerDialog(view: View) {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        // First, pick the start date
-        val startDatePicker = DatePickerDialog(this, { _, startYear, startMonth, startDay ->
-            val startDate = "$startDay/${startMonth + 1}/$startYear"
-
-            // Then, pick the end date
-            val endDatePicker = DatePickerDialog(this, { _, endYear, endMonth, endDay ->
-                val endDate = "$endDay/${endMonth + 1}/$endYear"
-                // Handle the date chosen by the user
-                Toast.makeText(this, "Date range selected: $startDate - $endDate", Toast.LENGTH_LONG).show()
-            }, year, month, day)
-
-            // Set the minimum date for the end date picker to be the selected start date
-            val startCalendar = Calendar.getInstance()
-            startCalendar.set(startYear, startMonth, startDay)
-            endDatePicker.datePicker.minDate = startCalendar.timeInMillis
-
-            endDatePicker.setTitle("Select Second Date") // Set custom title for the end date picker dialog
-            endDatePicker.show()
-        }, year, month, day)
-
-        startDatePicker.setTitle("Select Start Date")
-        startDatePicker.show()
     }
 }

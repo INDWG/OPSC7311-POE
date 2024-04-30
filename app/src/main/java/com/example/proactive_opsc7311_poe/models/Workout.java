@@ -6,7 +6,9 @@ public class Workout {
     private String name;
     private String description;
     private int progress;
-    private int totalExercises; // New field to store the total number of exercises
+    private int totalExercises;
+
+    private int totalLoggedTime;
 
     public Workout(String workoutID, String name, String description, int progress, int totalExercises) {
         this.workoutID = workoutID;
@@ -51,4 +53,12 @@ public class Workout {
     public int getTotalExercises() { return totalExercises; }
 
     public void setTotalExercises(int totalExercises) { this.totalExercises = totalExercises; }
+
+    public int getTotalLoggedTime() {
+        return totalLoggedTime;
+    }
+
+    public void setTotalLoggedTime(int totalLoggedTime) {
+        this.totalLoggedTime = totalLoggedTime;
+    }
 }
