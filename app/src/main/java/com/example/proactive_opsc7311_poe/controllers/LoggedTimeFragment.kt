@@ -114,6 +114,9 @@ class LoggedTimeFragment : Fragment()
                                     val workoutProgress =
                                         workoutDocument.getLong("progress")?.toInt() ?: 0
 
+                                    val workoutLoggedTime =
+                                        workoutDocument.getLong("totalLoggedTime")?.toInt() ?: 0
+
                                     val workoutDocRef = workoutDocument.reference
 
                                     workoutDocRef.collection("exercises")
@@ -134,7 +137,8 @@ class LoggedTimeFragment : Fragment()
                                             {
                                                 workoutDocRef.update(
                                                     mapOf(
-                                                        "progress" to (workoutProgress + 1)
+                                                        "progress" to (workoutProgress + 1),
+                                                        "totalLoggedTime" to (workoutLoggedTime + loggedTime.text.toString().toInt())
                                                     )
                                                 )
                                             }
