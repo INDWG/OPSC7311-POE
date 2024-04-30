@@ -1,16 +1,15 @@
 package com.example.proactive_opsc7311_poe.controllers
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.proactive_opsc7311_poe.R
 import com.example.proactive_opsc7311_poe.models.Exercise
@@ -23,54 +22,42 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class ViewExerciseFragment : Fragment()
+class LoggedTimeFragment : Fragment()
 {
+
     private lateinit var username: TextView
     private lateinit var exerciseName: TextView
-    private lateinit var progressPhotoView: ImageView
-    private lateinit var date: TextView
-    private lateinit var exerciseDate: TextView
-    private lateinit var doneBackground: LinearLayout
-    private lateinit var doneImage: ImageView
-    private lateinit var done: TextView
-    private lateinit var time: TextView
-    private lateinit var category: TextView
-    private lateinit var categoryDescription: TextView
-    private lateinit var stats: TextView
-    private lateinit var statsDescription: TextView
+    private lateinit var min: TextView
+    private lateinit var max: TextView
     private lateinit var backButton: ImageButton
-
-    private val db = Firebase.firestore
+    private lateinit var exerciseTime: TextView
+    private lateinit var logTime: Button
+    private lateinit var loggedTime: EditText
 
     private var workoutID = ""
     private var exerciseID = ""
+
+    private val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View?
     {
-        val view = inflater.inflate(R.layout.view_exercise_fragment, container, false)
+        val view = inflater.inflate(R.layout.logged_time_fragment, container, false)
 
         username = view.findViewById(R.id.username)
         exerciseName = view.findViewById(R.id.exerciseName)
-        progressPhotoView = view.findViewById(R.id.progressPhotoView)
-        date = view.findViewById(R.id.date)
-        exerciseDate = view.findViewById(R.id.exerciseDate)
-        doneBackground = view.findViewById(R.id.doneBackground)
-        doneImage = view.findViewById(R.id.doneImage)
-        done = view.findViewById(R.id.done)
-        time = view.findViewById(R.id.time)
-        category = view.findViewById(R.id.category)
-        categoryDescription = view.findViewById(R.id.categoryDescription)
-        stats = view.findViewById(R.id.stats)
-        statsDescription = view.findViewById(R.id.statsDescription)
-
-        progressPhotoView.clipToOutline = true
+        exerciseTime = view.findViewById(R.id.exerciseTime)
+        min = view.findViewById(R.id.minTime)
+        max = view.findViewById(R.id.maxTime)
+        loggedTime = view.findViewById(R.id.loggedTime)
 
         workoutID = arguments?.getString("workout_id") ?: ""
         exerciseID = arguments?.getString("exercise_id") ?: ""
 
         readData(exerciseID, workoutID)
+
+
 
         return view
     }
@@ -84,51 +71,12 @@ class ViewExerciseFragment : Fragment()
         backButton.setOnClickListener {
             btnBackClicked(this)
         }
-    }
 
-    private fun populateComponents(exercise: Exercise)
-    {
-        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
-
-        // Convert com.google.type.DateTime to java.util.Date
-        val calendar = Calendar.getInstance()
-        calendar.set(
-            exercise.date.year, exercise.date.month - 1, // Calendar.MONTH is zero-based
-            exercise.date.day
-        )
-        val date = calendar.time
-
-        exerciseName.text = exercise.name
-        exerciseDate.text = dateFormat.format(date)
-
-        if (exercise.loggedTime < exercise.max && exercise.loggedTime > exercise.min)
-        {
-            exercise.isGoalsMet = true
-            statsDescription.text = "Daily Goals were met. Well Done!"
-        } else
-        {
-            exercise.isGoalsMet = false
-            statsDescription.text = "Daily Goals have not been met."
+        logTime =
+            view.findViewById(R.id.btnLogTime)
+        logTime.setOnClickListener{
+            btnLogTimeClicked(this)
         }
-
-        // Check if the loggedTime is not null and not empty
-        if (exercise.loggedTime != null && exercise.loggedTime > 0)
-        {
-            // Set the background tint to green and the icon to done_true
-            doneBackground.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#2AD300"))
-            doneImage.setImageResource(R.drawable.done_true)
-            time.text = "${exercise.loggedTime} mins"
-        } else
-        {
-            // Set the background tint to proactive red and the icon to done_false
-            doneBackground.backgroundTintList =
-                ColorStateList.valueOf(Color.parseColor("#FF0000")) // proactive red color code
-            doneImage.setImageResource(R.drawable.done_false)
-            time.text = "0 mins"
-            statsDescription.text = "Daily Goals have not been met yet."
-        }
-
-        categoryDescription.text = exercise.category
     }
 
     // Utility function to convert Timestamp to com.google.type.Date
@@ -140,6 +88,135 @@ class ViewExerciseFragment : Fragment()
             .setMonth(calendar.get(Calendar.MONTH) + 1) // Calendar.MONTH is zero-based
             .setDay(calendar.get(Calendar.DAY_OF_MONTH))
             .build()
+    }
+
+    private fun btnLogTimeClicked(fragment: Fragment)
+    {
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let { currentUser ->
+            val userId = currentUser.uid
+
+            db.collection("users").whereEqualTo("uid", userId).get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty)
+                    {
+                        // There should be only one document with the given UID
+                        val document = querySnapshot.documents[0]
+
+                        val userDocRef = document.reference
+
+                        userDocRef.collection("workouts").whereEqualTo("workoutID", workoutID).get()
+                            .addOnSuccessListener { workoutsSnapshot ->
+                                if (!workoutsSnapshot.isEmpty)
+                                {
+                                    val workoutDocument = workoutsSnapshot.documents[0]
+
+                                    val workoutProgress =
+                                        workoutDocument.getLong("progress")?.toInt() ?: 0
+
+                                    val workoutDocRef = workoutDocument.reference
+
+                                    workoutDocRef.collection("exercises")
+                                        .whereEqualTo("exerciseID", exerciseID).get()
+                                        .addOnSuccessListener { exercisesSnapshot ->
+                                            val exerciseDocument = exercisesSnapshot.documents[0]
+
+                                            val exerciseName =
+                                                exerciseDocument.getString("name") ?: ""
+                                            val exerciseMin =
+                                                exerciseDocument.getLong("min")?.toInt() ?: 0
+                                            val exerciseMax =
+                                                exerciseDocument.getLong("max")?.toInt() ?: 0
+                                            val exerciseLoggedTime =
+                                                exerciseDocument.getLong("loggedTime")?.toInt() ?: 0
+
+                                            if (exerciseLoggedTime <= 0 || exerciseLoggedTime.toString().isEmpty())
+                                            {
+                                                workoutDocRef.update(
+                                                    mapOf(
+                                                        "progress" to (workoutProgress + 1)
+                                                    )
+                                                )
+                                            }
+
+                                            val exerciseRefDoc = exerciseDocument.reference
+
+                                            if (loggedTime.text.toString().toInt() < exerciseMax && loggedTime.text.toString().toInt() > exerciseMin)
+                                            {
+                                                exerciseRefDoc.update(
+                                                    mapOf(
+                                                        "loggedTime" to loggedTime.text.toString().toInt(),
+                                                        "goalsMet" to true
+                                                    )
+                                                )
+                                            }
+                                            else
+                                            {
+                                                exerciseRefDoc.update(
+                                                    mapOf(
+                                                        "loggedTime" to loggedTime.text.toString().toInt(),
+                                                        "goalsMet" to false
+                                                    )
+                                                )
+                                            }
+
+                                            Toast.makeText(
+                                                fragment.requireContext(), "Logged new time: $exerciseName", Toast.LENGTH_SHORT
+                                            ).show()
+
+                                            loggedTime.setText("")
+
+                                            btnBackClicked(this)
+
+                                        }.addOnFailureListener { e ->
+                                            Log.w("readData", "Error getting exercises: ", e)
+                                        }
+                                }
+                            }.addOnFailureListener { e ->
+                                Log.w("readData", "Error getting workouts: ", e)
+                            }
+                    }
+                }
+        }
+    }
+
+    private fun populateComponents(exercise: Exercise)
+    {
+        val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
+        val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault()) // This will format the time as "9:00 AM"
+
+        // Convert com.google.type.DateTime to java.util.Date
+        val calendar = Calendar.getInstance()
+        calendar.set(
+            exercise.date.year, exercise.date.month - 1, // Calendar.MONTH is zero-based
+            exercise.date.day
+        )
+        val date = calendar.time
+
+        exerciseName.text = exercise.name
+
+        // Format and set the start and end times
+        val startTime = exercise.startTime.toDate() // Assuming exercise.startTime is a Timestamp
+        val endTime = exercise.endTime.toDate() // Assuming exercise.endTime is a Timestamp
+        exerciseTime.text = "From " + timeFormat.format(startTime) + " to " + timeFormat.format(endTime)
+
+        if (exercise.min >= 60.00)
+        {
+            min.text = (exercise.min/60.00).toString() + " hour/s"
+        }
+        else
+        {
+            min.text = exercise.min.toString() + " min/s"
+        }
+
+        if (exercise.max >= 60.00)
+        {
+            max.text = (exercise.max/60.00).toString() + " hour/s"
+        }
+        else
+        {
+            max.text = exercise.max.toString() + " min/s"
+        }
     }
 
     private fun readData(exerciseID: String, workoutID: String) {
@@ -243,5 +320,4 @@ class ViewExerciseFragment : Fragment()
         parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
             .commit()
     }
-
 }

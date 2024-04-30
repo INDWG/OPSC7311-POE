@@ -70,7 +70,8 @@
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/proactive_red"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="Loading..."/>
 
         </LinearLayout>
 

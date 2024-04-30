@@ -60,7 +60,8 @@
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/proactive_red"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="Loading..."/>
         </LinearLayout>
 
         <TextView
@@ -72,7 +73,8 @@
             android:textSize="16sp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:text="Loading..."/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -90,7 +92,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button"
             android:layout_gravity="center"
-            android:text="Start Workout"
+            android:text="Start Exercise"
             android:textAllCaps="false"
             android:layout_marginBottom="20dp" />
 
