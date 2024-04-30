@@ -40,7 +40,7 @@ class ExerciseAdapter(
                 exerciseClickListener.onExerciseClicked(exerciseID)
             }
             logTimeButton.setOnClickListener {
-                val exerciseID = exercises[adapterPosition].name
+                val exerciseID = exercises[adapterPosition].exerciseID
                 logTimeClickListener.onLogTimeClicked(exerciseID)
             }
         }
