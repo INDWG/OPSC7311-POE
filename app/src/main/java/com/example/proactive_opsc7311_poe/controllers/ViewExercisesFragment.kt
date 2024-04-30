@@ -50,7 +50,7 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
 
         exerciseRecyclerView.adapter = exerciseAdapter
 
-        workoutID = arguments?.getString("workout_name") ?: ""
+        workoutID = arguments?.getString("workout_id") ?: ""
 
         readData(workoutID)
 
@@ -68,8 +68,17 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
         }
     }
 
-    override fun onExerciseClicked(exerciseName: String) {
-        // Handle navigation to exercise detail page
+    override fun onExerciseClicked(exerciseID: String) {
+        val fragment = ViewExerciseFragment().apply {
+            arguments = Bundle().apply {
+                putString("exercise_id", exerciseID)
+                putString("workout_id", workoutID)
+            }
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onLogTimeClicked(exerciseName: String) {
@@ -150,6 +159,7 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
                                                 val exerciseMax = exerciseDocument.getLong("max")?.toInt() ?: 0
                                                 val exerciseLoggedTime = exerciseDocument.getLong("loggedTime")?.toInt() ?: 0
                                                 val exerciseGoalsMet = exerciseDocument.getBoolean("goalsMet") ?: false
+
                                                 val exercise = Exercise(
                                                     exerciseID,
                                                     exerciseName,
