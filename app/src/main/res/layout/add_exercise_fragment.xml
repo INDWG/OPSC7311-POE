@@ -4,8 +4,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="onAddProgressPictureClicked"
-
     tools:context=".controllers.WorkOutPlanFragment">
 
 
@@ -74,28 +72,33 @@
                 android:layout_marginBottom="30dp"
                 android:textColor="@color/proactive_red"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="Loading..."/>
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/workoutNameTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Midmar Mile training"
+            android:text="Loading..."
+            android:textStyle="bold"
             android:gravity="center_horizontal"
             android:textAlignment="center"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:textColor="@android:color/white"
             android:layout_marginTop="8dp"/>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageAddProgress"
             android:layout_width="match_parent"
             android:background="@drawable/workout_card_background"
             android:layout_height="200dp"
             android:src="@drawable/camera_icon"
             android:layout_margin="16dp"
-            android:contentDescription="@string/add_progress_picture" />
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/add_progress_picture"
+            android:onClick="imageAddProgressClicked"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -106,7 +109,7 @@
             android:layout_marginTop="8dp"/>
 
         <EditText
-            android:id="@+id/editWorkoutName"
+            android:id="@+id/exerciseName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -125,12 +128,12 @@
             android:layout_marginTop="8dp"/>
 
         <EditText
-            android:id="@+id/editDescription"
+            android:id="@+id/exerciseDescription"
             android:layout_width="match_parent"
             android:layout_height="166dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/textfield"
-            android:hint="Give your workout an interesting description of no more than 150 characters in length."
+            android:hint="Give your exercise an interesting description of no more than 150 characters in length."
             android:gravity="top|start"
             android:padding="10dp"
             android:textColor="@color/black"
@@ -208,7 +211,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/textfield"
-                    android:hint="Goal number of hours"
+                    android:hint="Goal time (mins)"
                     android:inputType="numberDecimal"
                     android:padding="10dp"
                     android:textColor="@color/black"
@@ -236,7 +239,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/textfield"
-                    android:hint="Goal number of hours"
+                    android:hint="Goal time (mins)"
                     android:inputType="numberDecimal"
                     android:padding="10dp"
                     android:textColor="@color/black"
@@ -257,17 +260,15 @@
             <Spinner
                 android:id="@+id/spinnerChooseCategory"
                 android:layout_width="match_parent"
-                android:layout_height="51dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="50dp"
                 android:background="@drawable/button"
                 android:dropDownVerticalOffset="40dp"
-                android:prompt="@array/choose_category"
-
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+                android:entries="@array/category_array"/>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="20dp" />
 
             <!-- Create Exercise Button -->
             <Button
@@ -277,8 +278,8 @@
                 android:text="Create Exercise"
                 android:textAllCaps="false"
                 android:background="@drawable/button"
-
-                android:onClick="btnCreateExerciseClicked"/>
+                android:onClick="btnCreateExerciseClicked"
+                android:layout_marginBottom="20dp"/>
         </LinearLayout>
 
 

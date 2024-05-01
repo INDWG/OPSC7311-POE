@@ -18,6 +18,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import com.google.type.Date
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -206,7 +207,10 @@ class LoggedTimeFragment : Fragment()
 
         if (exercise.min >= 60.00)
         {
-            min.text = (exercise.min/60.00).toString() + " hour/s"
+            val hours = exercise.min / 60.00
+            val formatter = DecimalFormat("0.00")
+            val formattedHours = formatter.format(hours)
+            min.text = formattedHours + " hour/s"
         }
         else
         {
@@ -215,7 +219,10 @@ class LoggedTimeFragment : Fragment()
 
         if (exercise.max >= 60.00)
         {
-            max.text = (exercise.max/60.00).toString() + " hour/s"
+            val hours = exercise.max / 60.00
+            val formatter = DecimalFormat("0.00")
+            val formattedHours = formatter.format(hours)
+            max.text = formattedHours + " hour/s"
         }
         else
         {

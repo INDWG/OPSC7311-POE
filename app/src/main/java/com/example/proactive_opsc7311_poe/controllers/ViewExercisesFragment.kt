@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -25,6 +26,7 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
     private lateinit var exerciseAdapter: ExerciseAdapter
     private lateinit var exerciseName: TextView
     private lateinit var backButton: ImageButton
+    private lateinit var startExercise: Button
 
     private val exercises = mutableListOf<Exercise>()
 
@@ -60,6 +62,12 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
             view.findViewById(R.id.btnBack)
         backButton.setOnClickListener {
             btnBackClicked(this)
+        }
+
+        startExercise =
+            view.findViewById(R.id.btnStartExercise)
+        startExercise.setOnClickListener{
+            btnStartExerciseClicked()
         }
     }
 
@@ -196,6 +204,19 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
     private fun btnBackClicked(fragment: Fragment)
     {
         navigateToFragment(ViewWorkoutFragment())
+    }
+
+    private fun btnStartExerciseClicked()
+    {
+        val fragment = AddExerciseFragment().apply {
+            arguments = Bundle().apply {
+                putString("workout_id", workoutID)
+            }
+        }
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun navigateToFragment(fragment: Fragment) {

@@ -87,14 +87,15 @@
             android:layout_marginBottom="8dp"/>
 
         <Button
-            android:id="@+id/btnStartWorkout"
+            android:id="@+id/btnStartExercise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button"
             android:layout_gravity="center"
             android:text="Start Exercise"
             android:textAllCaps="false"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="20dp"
+            android:onClick="btnStartExerciseClicked"/>
 
         <!-- RecyclerView for workouts -->
         <androidx.recyclerview.widget.RecyclerView
