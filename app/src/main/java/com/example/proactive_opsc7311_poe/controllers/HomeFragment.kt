@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,8 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
     private val db = Firebase.firestore
 
     private val workouts = mutableListOf<Workout>()
+
+    private lateinit var helpButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -44,6 +47,25 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
         readData()
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        helpButton = view.findViewById(R.id.btnHelp)
+        helpButton.setOnClickListener {
+            btnHelpClicked()
+        }
+    }
+
+    private fun btnHelpClicked()
+    {
+        navigateToFragment(HelpFragment("help_title_home_page","help_content_home_page", requireContext()))
+    }
+
+    private fun navigateToFragment(fragment: Fragment) {
+        // Replace the current fragment with the new fragment
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .commit()
     }
 
     override fun onWorkoutClicked(workoutName: String) {

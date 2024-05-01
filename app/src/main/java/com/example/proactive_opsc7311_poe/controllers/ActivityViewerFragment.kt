@@ -38,6 +38,7 @@ class ActivityViewerFragment : Fragment()
     private lateinit var workoutRecyclerView: RecyclerView
     private lateinit var exerciseRecyclerView: RecyclerView
     private lateinit var spinnerWorkoutsExercises: Spinner
+    private lateinit var helpButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -73,8 +74,18 @@ class ActivityViewerFragment : Fragment()
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerWorkoutsExercises.adapter = adapter
 
+        helpButton = view.findViewById(R.id.btnHelp)
+        helpButton.setOnClickListener {
+            btnHelpClicked()
+        }
+
         // Call the method to retrieve user data
         retrieveUserName(view)
+    }
+
+    private fun btnHelpClicked()
+    {
+        navigateToFragment(HelpFragment("help_title_view_workouts_and_exercises","help_content_view_workouts_and_exercises", requireContext()))
     }
 
     private fun retrieveUserName(view: View)
@@ -382,4 +393,9 @@ class ActivityViewerFragment : Fragment()
         startDatePicker.show()
     }
 
+    private fun navigateToFragment(fragment: Fragment) {
+        // Replace the current fragment with the new fragment
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .commit()
+    }
 }

@@ -40,6 +40,8 @@ class LoggedTimeFragment : Fragment()
 
     private val db = Firebase.firestore
 
+    private lateinit var helpButton: Button
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View?
@@ -57,8 +59,6 @@ class LoggedTimeFragment : Fragment()
         exerciseID = arguments?.getString("exercise_id") ?: ""
 
         readData(exerciseID, workoutID)
-
-
 
         return view
     }
@@ -78,6 +78,16 @@ class LoggedTimeFragment : Fragment()
         logTime.setOnClickListener{
             btnLogTimeClicked(this)
         }
+
+        helpButton = view.findViewById(R.id.btnHelp)
+        helpButton.setOnClickListener {
+            btnHelpClicked()
+        }
+    }
+
+    private fun btnHelpClicked()
+    {
+        navigateToFragment(HelpFragment("help_title_log_exercise_data","help_content_log_exercise_data", requireContext()))
     }
 
     // Utility function to convert Timestamp to com.google.type.Date

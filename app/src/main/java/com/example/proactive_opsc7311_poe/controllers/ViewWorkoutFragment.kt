@@ -24,6 +24,8 @@ class ViewWorkoutFragment : Fragment(), OnWorkoutClickListener
 
     private lateinit var startWorkout: Button
 
+    private lateinit var helpButton: Button
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View?
@@ -41,6 +43,11 @@ class ViewWorkoutFragment : Fragment(), OnWorkoutClickListener
         readData()
 
         return view
+    }
+
+    private fun btnHelpClicked()
+    {
+        navigateToFragment(HelpFragment("help_title_choose_workout_plan","help_content_choose_workout_plan", requireContext()))
     }
 
     override fun onWorkoutClicked(workoutID: String) {
@@ -133,6 +140,11 @@ class ViewWorkoutFragment : Fragment(), OnWorkoutClickListener
             view.findViewById(R.id.btnStartWorkout)
         startWorkout.setOnClickListener {
             btnStartWorkoutClicked(this)
+        }
+
+        helpButton = view.findViewById(R.id.btnHelp)
+        helpButton.setOnClickListener {
+            btnHelpClicked()
         }
     }
 

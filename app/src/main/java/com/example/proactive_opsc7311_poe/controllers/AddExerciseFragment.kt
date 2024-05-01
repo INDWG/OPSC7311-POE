@@ -74,6 +74,8 @@ class AddExerciseFragment : Fragment()
     private var imagePath = ""
     private val CAMERA_PERMISSION_REQUEST_CODE = 101
 
+    private lateinit var helpButton: Button
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -156,8 +158,23 @@ class AddExerciseFragment : Fragment()
         exerciseEndTimeChooser.setOnClickListener {
             showTimePicker(false)
         }
+
+        helpButton = view.findViewById(R.id.btnHelp)
+        helpButton.setOnClickListener {
+            btnHelpClicked()
+        }
     }
 
+    private fun btnHelpClicked()
+    {
+        navigateToFragment(HelpFragment("help_title_add_exercise","help_content_add_exercise", requireContext()))
+    }
+
+    private fun navigateToFragment(fragment: Fragment) {
+        // Replace the current fragment with the new fragment
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .commit()
+    }
 
     // user name code
     private fun readData(workoutID: String)

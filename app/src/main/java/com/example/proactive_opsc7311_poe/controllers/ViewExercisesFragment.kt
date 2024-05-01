@@ -34,6 +34,8 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
 
     private val db = Firebase.firestore
 
+    private lateinit var helpButton: Button
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -69,6 +71,16 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
         startExercise.setOnClickListener{
             btnStartExerciseClicked()
         }
+
+        helpButton = view.findViewById(R.id.btnHelp)
+        helpButton.setOnClickListener {
+            btnHelpClicked()
+        }
+    }
+
+    private fun btnHelpClicked()
+    {
+        navigateToFragment(HelpFragment("help_title_exercise_page","help_content_exercise_page", requireContext()))
     }
 
     override fun onExerciseClicked(exerciseID: String) {
