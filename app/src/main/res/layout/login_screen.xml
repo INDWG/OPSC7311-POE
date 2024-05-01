@@ -128,7 +128,8 @@
                 android:layout_weight="1"
                 android:text="Forgot Password?"
                 android:textColor="#FF0000"
-                android:gravity="end"/>
+                android:gravity="end"
+                android:onClick="onForgotPasswordClicked"/>
 
         </LinearLayout>
 
