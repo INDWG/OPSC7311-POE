@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:text="10 pull ups"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="12dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,8 +29,9 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/camera_icon"
+            android:background="@drawable/textfield"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="12dp"/>
 
         <TextView
             android:id="@+id/textViewExerciseDescription"

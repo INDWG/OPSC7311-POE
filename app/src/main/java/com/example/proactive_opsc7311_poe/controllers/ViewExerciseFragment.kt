@@ -1,5 +1,6 @@
 package com.example.proactive_opsc7311_poe.controllers
 
+import android.content.ContentValues
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -18,7 +19,9 @@ import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.storage
 import com.google.type.Date
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -129,6 +132,49 @@ class ViewExerciseFragment : Fragment()
         }
 
         categoryDescription.text = exercise.category
+
+        val progressPictureUrl = exercise.image
+
+        if (progressPictureUrl.isNotEmpty())
+        {
+            val storageRef = Firebase.storage.reference
+
+            // Get the reference to the image file in Firebase Storage
+            val progressImageRef = storageRef.child(progressPictureUrl)
+
+            // Get the download URL for the image
+            progressImageRef.downloadUrl.addOnSuccessListener { uri ->
+                // Call loadProfilePicture with the URL if the URI is not null and not empty
+                if (uri.toString().isNotEmpty()) {
+                    loadProgressPicture(uri.toString())
+                } else {
+                    // Handle the case when the download URL is empty
+                    Log.d(ContentValues.TAG, "Progress picture URL is empty.")
+                    // You can set a default profile picture or handle it according to your app's logic
+                }
+            }.addOnFailureListener { exception ->
+                Log.e(ContentValues.TAG, "Error getting download URL", exception)
+                // Handle the failure to get the download URL
+            }
+        }
+    }
+
+    private fun loadProgressPicture(imageUrl: String) {
+        // Load image with Picasso
+        Picasso.get()
+            .load(imageUrl) // Add an error placeholder image
+            .into(progressPhotoView, object : com.squareup.picasso.Callback {
+                override fun onSuccess() {
+                    // Image loaded successfully
+                    progressPhotoView.visibility = View.VISIBLE
+                    progressPhotoView.scaleType = ImageView.ScaleType.CENTER_CROP
+                }
+
+                override fun onError(e: Exception?) {
+                    // Handle error loading image
+                    Log.e(ContentValues.TAG, "Error loading image", e)
+                }
+            })
     }
 
     // Utility function to convert Timestamp to com.google.type.Date

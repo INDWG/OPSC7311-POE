@@ -49,7 +49,7 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
     override fun onWorkoutClicked(workoutName: String) {
         val fragment = ViewExercisesFragment().apply {
             arguments = Bundle().apply {
-                putString("workout_name", workoutName)
+                putString("workout_id", workoutName)
             }
         }
         parentFragmentManager.beginTransaction()
