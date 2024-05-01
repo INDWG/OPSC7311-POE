@@ -28,7 +28,6 @@ class WorkOutPlanFragment : Fragment()
     private lateinit var workoutDescriptionEditText: EditText
     private var userId: String? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View?
@@ -185,7 +184,7 @@ class WorkOutPlanFragment : Fragment()
 
     fun btnHelpClicked(fragment: Fragment)
     {
-        //navigateToFragment(Help())
+        navigateToFragment(HelpFragment("help_title_new_workout_plan","help_content_new_workout_plan", requireContext()))
     }
 
     fun btnBackClicked(fragment: Fragment)
@@ -198,6 +197,4 @@ class WorkOutPlanFragment : Fragment()
         parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
             .commit()
     }
-
-
 }

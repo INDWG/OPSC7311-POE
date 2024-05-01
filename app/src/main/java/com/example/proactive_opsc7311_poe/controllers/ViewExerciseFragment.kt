@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -48,6 +49,8 @@ class ViewExerciseFragment : Fragment()
     private var workoutID = ""
     private var exerciseID = ""
 
+    private lateinit var helpButton: Button
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View?
@@ -87,6 +90,16 @@ class ViewExerciseFragment : Fragment()
         backButton.setOnClickListener {
             btnBackClicked(this)
         }
+
+        helpButton = view.findViewById(R.id.btnHelp)
+        helpButton.setOnClickListener {
+            btnHelpClicked()
+        }
+    }
+
+    private fun btnHelpClicked()
+    {
+        navigateToFragment(HelpFragment("help_title_view_exercise_stats","help_content_view_exercise_stats", requireContext()))
     }
 
     private fun populateComponents(exercise: Exercise)
