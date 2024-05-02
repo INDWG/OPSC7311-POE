@@ -3,7 +3,7 @@
 
 ## Features
 
-- **Login**: Users are able to log into the app using an username (email) & password.
+- **Login**: Users are able to log into the app using an Username(email) & Password.
 - **Categories**: Users are able to create workout plans where they can make exercises.
 - **Timesheet Entry**: When users are creating an exercise they are able to specify the date at which the exercise will take place along with able to specify the start and end times, add a description and assign it to a category.
 - **Photograph**: Users are to assign a "Progress Picture" to any of their exercises so they can track the progress of their work.
