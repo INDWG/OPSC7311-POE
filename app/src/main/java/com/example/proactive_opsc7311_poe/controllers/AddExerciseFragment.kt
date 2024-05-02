@@ -167,13 +167,19 @@ class AddExerciseFragment : Fragment()
 
     private fun btnHelpClicked()
     {
-        navigateToFragment(HelpFragment("help_title_add_exercise","help_content_add_exercise", requireContext()))
+        navigateToFragment(
+            HelpFragment(
+                "help_title_add_exercise",
+                "help_content_add_exercise",
+                requireContext()
+            )
+        )
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    private fun navigateToFragment(fragment: Fragment)
+    {
         // Replace the current fragment with the new fragment
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 
     // user name code
@@ -353,7 +359,8 @@ class AddExerciseFragment : Fragment()
     {
         val drawable = progressImage.drawable
 
-        if (drawable is BitmapDrawable) {
+        if (drawable is BitmapDrawable)
+        {
             val storageRef = Firebase.storage.reference
             val progressImageRef =
                 storageRef.child("progress_photos/$userId/$workoutID/$exerciseID.jpg")
@@ -378,12 +385,11 @@ class AddExerciseFragment : Fragment()
                 // Show a toast or perform any other action to indicate failure
                 // For example, you can display a toast message:
                 Toast.makeText(
-                    requireContext(),
-                    "Failed to upload profile photo",
-                    Toast.LENGTH_SHORT
+                    requireContext(), "Failed to upload profile photo", Toast.LENGTH_SHORT
                 ).show()
             }
-        } else {
+        } else
+        {
             // Handle the case when the drawable is not a BitmapDrawable
             Log.e(ContentValues.TAG, "Progress picture is not a BitmapDrawable")
         }

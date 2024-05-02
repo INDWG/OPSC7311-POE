@@ -56,30 +56,35 @@ class RegisterScreen : AppCompatActivity()
     }
 
     //perform more logic when backend is implemented
-    fun btnRegisterClicked(view: View) {
+    fun btnRegisterClicked(view: View)
+    {
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString()
         val confirmPassword = confirmPasswordEditText.text.toString()
 
-        if (!isValidEmail(email)) {
+        if (!isValidEmail(email))
+        {
             emailEditText.error = "Enter a valid email address"
             return
         }
 
-        if (password != confirmPassword) {
+        if (password != confirmPassword)
+        {
             confirmPasswordTextInputLayout.error = "Passwords do not match"
             return
         }
 
-        if (!isValidPassword(password)) {
-            passwordTextInputLayout.error = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character"
+        if (!isValidPassword(password))
+        {
+            passwordTextInputLayout.error =
+                "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character"
             return
         }
 
         // Create user with email and password
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this) { task ->
+                if (task.isSuccessful)
+                {
                     // Registration success, create firestore document for user
                     val user = auth.currentUser
                     val userId = user?.uid ?: ""
@@ -96,8 +101,7 @@ class RegisterScreen : AppCompatActivity()
                         "pfp" to "",
                     )
 
-                    userDocRef.set(userData)
-                        .addOnSuccessListener {
+                    userDocRef.set(userData).addOnSuccessListener {
 
                             Toast.makeText(
                                 baseContext, "Register successful.", Toast.LENGTH_SHORT
@@ -108,36 +112,39 @@ class RegisterScreen : AppCompatActivity()
 
                             startActivity(intent)
                             finish()
-                        }
-                        .addOnFailureListener { e ->
+                        }.addOnFailureListener { e ->
                             // Document creation failed
                             Toast.makeText(
-                                baseContext, "Failed to create user document: ${e.message}",
+                                baseContext,
+                                "Failed to create user document: ${e.message}",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                } else {
+                } else
+                {
                     // Registration failed, handle exceptions
-                    if (task.exception is FirebaseAuthUserCollisionException) {
+                    if (task.exception is FirebaseAuthUserCollisionException)
+                    {
                         // User with this email already exists
                         emailEditText.error = "Email already registered"
-                    } else {
+                    } else
+                    {
                         Toast.makeText(
-                            baseContext, "Registration failed.",
-                            Toast.LENGTH_SHORT
+                            baseContext, "Registration failed.", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
             }
     }
 
-    private fun isValidEmail(email: String): Boolean {
+    private fun isValidEmail(email: String): Boolean
+    {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.length <= 100
     }
 
-    private fun isValidPassword(password: String): Boolean {
-        val passwordRegex =
-            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+\$).{8,}\$"
+    private fun isValidPassword(password: String): Boolean
+    {
+        val passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+\$).{8,}\$"
         return password.matches(passwordRegex.toRegex())
     }
 }

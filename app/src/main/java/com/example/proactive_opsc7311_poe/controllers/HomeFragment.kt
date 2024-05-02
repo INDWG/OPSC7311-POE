@@ -19,7 +19,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class HomeFragment : Fragment(), OnWorkoutClickListener {
+class HomeFragment : Fragment(), OnWorkoutClickListener
+{
 
     private val db = Firebase.firestore
 
@@ -29,16 +30,18 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View?
+    {
         val view = inflater.inflate(R.layout.home_fragment, container, false)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewWorkouts)
 
         // Assuming you have an adapter class named 'WorkoutAdapter'
-        val adapter = WorkoutAdapter(workouts,this)
+        val adapter = WorkoutAdapter(workouts, this)
 
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context) // or GridLayoutManager(context, numberOfColumns)
+        recyclerView.layoutManager =
+            LinearLayoutManager(context) // or GridLayoutManager(context, numberOfColumns)
 
         // Set the text for date progress
         val dateProgress = view.findViewById<TextView>(R.id.date_progress)
@@ -59,34 +62,41 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
 
     private fun btnHelpClicked()
     {
-        navigateToFragment(HelpFragment("help_title_home_page","help_content_home_page", requireContext()))
+        navigateToFragment(
+            HelpFragment(
+                "help_title_home_page",
+                "help_content_home_page",
+                requireContext()
+            )
+        )
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    private fun navigateToFragment(fragment: Fragment)
+    {
         // Replace the current fragment with the new fragment
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 
-    override fun onWorkoutClicked(workoutName: String) {
+    override fun onWorkoutClicked(workoutName: String)
+    {
         val fragment = ViewExercisesFragment().apply {
             arguments = Bundle().apply {
                 putString("workout_id", workoutName)
             }
         }
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .addToBackStack(null).commit()
     }
 
     // Function to get current date in readable format
-    private fun getCurrentDate(): String {
+    private fun getCurrentDate(): String
+    {
         val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
         return dateFormat.format(Date())
     }
 
-    private fun readData() {
+    private fun readData()
+    {
         val user = FirebaseAuth.getInstance().currentUser
         // Simplified date format without time
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -98,7 +108,8 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
 
             db.collection("users").whereEqualTo("uid", userId).get()
                 .addOnSuccessListener { querySnapshot ->
-                    if (!querySnapshot.isEmpty) {
+                    if (!querySnapshot.isEmpty)
+                    {
                         // There should be only one document with the given UID
                         val document = querySnapshot.documents[0]
                         val userData = document.data
@@ -107,9 +118,11 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
 
                         val firstname = userData?.get("firstname") as? String ?: ""
 
-                        if (firstname.isNotEmpty()) {
+                        if (firstname.isNotEmpty())
+                        {
                             username?.text = firstname
-                        } else {
+                        } else
+                        {
                             username?.text = "User"
                         }
 
@@ -118,28 +131,47 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
                         // Check if the "workouts" collection exists for the user
                         userDocRef.collection("workouts").get()
                             .addOnSuccessListener { workoutsSnapshot ->
-                                for (workoutDocument in workoutsSnapshot.documents) {
+                                for (workoutDocument in workoutsSnapshot.documents)
+                                {
                                     val workoutId = workoutDocument.getString("workoutID") ?: ""
-                                    val workoutProgress = workoutDocument.getLong("progress")?.toInt() ?: 0
-                                    val totalExercises = workoutDocument.getLong("total-exercises")?.toInt() ?: 0
+                                    val workoutProgress =
+                                        workoutDocument.getLong("progress")?.toInt() ?: 0
+                                    val totalExercises =
+                                        workoutDocument.getLong("total-exercises")?.toInt() ?: 0
 
                                     // Check if the workout is completed, if so, skip adding it to the list
-                                    if (workoutProgress != totalExercises) {
+                                    if (workoutProgress != totalExercises)
+                                    {
                                         // Query the 'exercises' subcollection
                                         userDocRef.collection("workouts").document(workoutId)
                                             .collection("exercises").get()
                                             .addOnSuccessListener { exercisesSnapshot ->
-                                                if (!exercisesSnapshot.isEmpty) {
-                                                    for (exerciseDocument in exercisesSnapshot.documents) {
-                                                        val exerciseDate = exerciseDocument.getTimestamp("date")?.toDate()?.let { date ->
-                                                            dateFormat.format(date)
-                                                        }
+                                                if (!exercisesSnapshot.isEmpty)
+                                                {
+                                                    for (exerciseDocument in exercisesSnapshot.documents)
+                                                    {
+                                                        val exerciseDate =
+                                                            exerciseDocument.getTimestamp("date")
+                                                                ?.toDate()?.let { date ->
+                                                                dateFormat.format(date)
+                                                            }
 
-                                                        if (currentDate == exerciseDate.toString()) {
-                                                            val workoutName = workoutDocument.getString("name") ?: ""
-                                                            val workoutDescription = workoutDocument.getString("description") ?: ""
+                                                        if (currentDate == exerciseDate.toString())
+                                                        {
+                                                            val workoutName =
+                                                                workoutDocument.getString("name")
+                                                                    ?: ""
+                                                            val workoutDescription =
+                                                                workoutDocument.getString("description")
+                                                                    ?: ""
 
-                                                            val newWorkout = Workout(workoutId, workoutName, workoutDescription, workoutProgress, totalExercises)
+                                                            val newWorkout = Workout(
+                                                                workoutId,
+                                                                workoutName,
+                                                                workoutDescription,
+                                                                workoutProgress,
+                                                                totalExercises
+                                                            )
 
                                                             var exists = false
 
@@ -162,8 +194,7 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
                                             }
                                     }
                                 }
-                            }
-                            .addOnFailureListener { e ->
+                            }.addOnFailureListener { e ->
                                 // Handle any errors
                                 Log.w("readData", "Error getting workouts: ", e)
                             }
@@ -172,7 +203,8 @@ class HomeFragment : Fragment(), OnWorkoutClickListener {
         }
     }
 
-    private fun updateRecyclerView(workouts: List<Workout>) {
+    private fun updateRecyclerView(workouts: List<Workout>)
+    {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewWorkouts)
         val adapter = WorkoutAdapter(workouts, this)
         recyclerView?.adapter = adapter

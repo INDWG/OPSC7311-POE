@@ -85,7 +85,13 @@ class ActivityViewerFragment : Fragment()
 
     private fun btnHelpClicked()
     {
-        navigateToFragment(HelpFragment("help_title_view_workouts_and_exercises","help_content_view_workouts_and_exercises", requireContext()))
+        navigateToFragment(
+            HelpFragment(
+                "help_title_view_workouts_and_exercises",
+                "help_content_view_workouts_and_exercises",
+                requireContext()
+            )
+        )
     }
 
     private fun retrieveUserName(view: View)
@@ -181,7 +187,7 @@ class ActivityViewerFragment : Fragment()
                                                     workoutDocument.getString("description") ?: ""
                                                 val workoutTotalTime =
                                                     workoutDocument.getLong("totalLoggedTime")
-                                                        ?.toInt() ?: 0
+                                                        ?.toDouble() ?: 0.00
                                                 val newWorkout = Workout(
                                                     workoutId,
                                                     workoutName,
@@ -272,9 +278,9 @@ class ActivityViewerFragment : Fragment()
                                                 val exerciseCategory =
                                                     exerciseDocument.getString("category") ?: ""
                                                 val exerciseMin =
-                                                    exerciseDocument.getLong("min")?.toInt() ?: 0
+                                                    exerciseDocument.getLong("min")?.toDouble() ?: 0.00
                                                 val exerciseMax =
-                                                    exerciseDocument.getLong("max")?.toInt() ?: 0
+                                                    exerciseDocument.getLong("max")?.toDouble() ?: 0.00
 
                                                 val newExercise = Exercise(
                                                     exerciseID,
@@ -393,9 +399,9 @@ class ActivityViewerFragment : Fragment()
         startDatePicker.show()
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    private fun navigateToFragment(fragment: Fragment)
+    {
         // Replace the current fragment with the new fragment
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 }

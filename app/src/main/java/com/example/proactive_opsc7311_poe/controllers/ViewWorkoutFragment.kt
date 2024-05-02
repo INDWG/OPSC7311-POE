@@ -38,7 +38,8 @@ class ViewWorkoutFragment : Fragment(), OnWorkoutClickListener
         val adapter = WorkoutAdapter(workouts, this)
 
         recyclerView?.adapter = adapter
-        recyclerView?.layoutManager = LinearLayoutManager(context) // or GridLayoutManager(context, numberOfColumns)
+        recyclerView?.layoutManager =
+            LinearLayoutManager(context) // or GridLayoutManager(context, numberOfColumns)
 
         readData()
 
@@ -47,22 +48,28 @@ class ViewWorkoutFragment : Fragment(), OnWorkoutClickListener
 
     private fun btnHelpClicked()
     {
-        navigateToFragment(HelpFragment("help_title_choose_workout_plan","help_content_choose_workout_plan", requireContext()))
+        navigateToFragment(
+            HelpFragment(
+                "help_title_choose_workout_plan",
+                "help_content_choose_workout_plan",
+                requireContext()
+            )
+        )
     }
 
-    override fun onWorkoutClicked(workoutID: String) {
+    override fun onWorkoutClicked(workoutID: String)
+    {
         val fragment = ViewExercisesFragment().apply {
             arguments = Bundle().apply {
                 putString("workout_id", workoutID)
             }
         }
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .addToBackStack(null).commit()
     }
 
-    private fun readData() {
+    private fun readData()
+    {
         val user = FirebaseAuth.getInstance().currentUser
 
         user?.let { currentUser ->
@@ -125,7 +132,8 @@ class ViewWorkoutFragment : Fragment(), OnWorkoutClickListener
         }
     }
 
-    private fun updateRecyclerView(workouts: List<Workout>) {
+    private fun updateRecyclerView(workouts: List<Workout>)
+    {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewWorkouts)
         val adapter = WorkoutAdapter(workouts, this)
         recyclerView?.adapter = adapter
@@ -136,8 +144,7 @@ class ViewWorkoutFragment : Fragment(), OnWorkoutClickListener
     {
         super.onViewCreated(view, savedInstanceState)
 
-        startWorkout =
-            view.findViewById(R.id.btnStartWorkout)
+        startWorkout = view.findViewById(R.id.btnStartWorkout)
         startWorkout.setOnClickListener {
             btnStartWorkoutClicked(this)
         }
@@ -153,9 +160,9 @@ class ViewWorkoutFragment : Fragment(), OnWorkoutClickListener
         navigateToFragment(WorkOutPlanFragment())
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    private fun navigateToFragment(fragment: Fragment)
+    {
         // Replace the current fragment with the new fragment
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 }

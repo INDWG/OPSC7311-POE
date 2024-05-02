@@ -23,6 +23,7 @@ import com.google.firebase.firestore.firestore
 import com.google.firebase.storage.storage
 import com.google.type.Date
 import com.squareup.picasso.Picasso
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -85,8 +86,7 @@ class ViewExerciseFragment : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        backButton =
-            view.findViewById(R.id.btnBack)
+        backButton = view.findViewById(R.id.btnBack)
         backButton.setOnClickListener {
             btnBackClicked(this)
         }
@@ -99,7 +99,13 @@ class ViewExerciseFragment : Fragment()
 
     private fun btnHelpClicked()
     {
-        navigateToFragment(HelpFragment("help_title_view_exercise_stats","help_content_view_exercise_stats", requireContext()))
+        navigateToFragment(
+            HelpFragment(
+                "help_title_view_exercise_stats",
+                "help_content_view_exercise_stats",
+                requireContext()
+            )
+        )
     }
 
     private fun populateComponents(exercise: Exercise)
@@ -133,7 +139,24 @@ class ViewExerciseFragment : Fragment()
             // Set the background tint to green and the icon to done_true
             doneBackground.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#2AD300"))
             doneImage.setImageResource(R.drawable.done_true)
-            time.text = "${exercise.loggedTime} mins"
+
+            var time = ""
+
+            if (exercise.loggedTime >= 60.00)
+            {
+                val hours = exercise.loggedTime / 60.00
+                val formatter = DecimalFormat("0.00")
+                val formattedHours = formatter.format(hours)
+                time = formattedHours + " hour/s"
+            } else
+            {
+                val mins = exercise.loggedTime
+                val formatter = DecimalFormat("0.00")
+                val formattedMins = formatter.format(mins)
+                time = formattedMins + " min/s"
+            }
+
+            this.time.text = time
         } else
         {
             // Set the background tint to proactive red and the icon to done_false
@@ -158,9 +181,11 @@ class ViewExerciseFragment : Fragment()
             // Get the download URL for the image
             progressImageRef.downloadUrl.addOnSuccessListener { uri ->
                 // Call loadProfilePicture with the URL if the URI is not null and not empty
-                if (uri.toString().isNotEmpty()) {
+                if (uri.toString().isNotEmpty())
+                {
                     loadProgressPicture(uri.toString())
-                } else {
+                } else
+                {
                     // Handle the case when the download URL is empty
                     Log.d(ContentValues.TAG, "Progress picture URL is empty.")
                     // You can set a default profile picture or handle it according to your app's logic
@@ -172,18 +197,21 @@ class ViewExerciseFragment : Fragment()
         }
     }
 
-    private fun loadProgressPicture(imageUrl: String) {
+    private fun loadProgressPicture(imageUrl: String)
+    {
         // Load image with Picasso
-        Picasso.get()
-            .load(imageUrl) // Add an error placeholder image
-            .into(progressPhotoView, object : com.squareup.picasso.Callback {
-                override fun onSuccess() {
+        Picasso.get().load(imageUrl) // Add an error placeholder image
+            .into(progressPhotoView, object : com.squareup.picasso.Callback
+            {
+                override fun onSuccess()
+                {
                     // Image loaded successfully
                     progressPhotoView.visibility = View.VISIBLE
                     progressPhotoView.scaleType = ImageView.ScaleType.CENTER_CROP
                 }
 
-                override fun onError(e: Exception?) {
+                override fun onError(e: Exception?)
+                {
                     // Handle error loading image
                     Log.e(ContentValues.TAG, "Error loading image", e)
                 }
@@ -191,17 +219,17 @@ class ViewExerciseFragment : Fragment()
     }
 
     // Utility function to convert Timestamp to com.google.type.Date
-    fun timestampToDate(timestamp: Timestamp): Date {
+    fun timestampToDate(timestamp: Timestamp): Date
+    {
         val calendar = Calendar.getInstance()
         calendar.time = timestamp.toDate()
-        return Date.newBuilder()
-            .setYear(calendar.get(Calendar.YEAR))
+        return Date.newBuilder().setYear(calendar.get(Calendar.YEAR))
             .setMonth(calendar.get(Calendar.MONTH) + 1) // Calendar.MONTH is zero-based
-            .setDay(calendar.get(Calendar.DAY_OF_MONTH))
-            .build()
+            .setDay(calendar.get(Calendar.DAY_OF_MONTH)).build()
     }
 
-    private fun readData(exerciseID: String, workoutID: String) {
+    private fun readData(exerciseID: String, workoutID: String)
+    {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let { currentUser ->
             val userId = currentUser.uid
@@ -228,30 +256,47 @@ class ViewExerciseFragment : Fragment()
 
                         val userDocRef = document.reference
 
-                        userDocRef.collection("workouts")
-                            .whereEqualTo("workoutID", workoutID).get()
+                        userDocRef.collection("workouts").whereEqualTo("workoutID", workoutID).get()
                             .addOnSuccessListener { workoutsSnapshot ->
-                                if (!workoutsSnapshot.isEmpty) {
+                                if (!workoutsSnapshot.isEmpty)
+                                {
                                     val workoutDocument = workoutsSnapshot.documents[0]
 
                                     val workoutDocRef = workoutDocument.reference
 
-                                    workoutDocRef.collection("exercises").whereEqualTo("exerciseID",exerciseID).get()
+                                    workoutDocRef.collection("exercises")
+                                        .whereEqualTo("exerciseID", exerciseID).get()
                                         .addOnSuccessListener { exercisesSnapshot ->
                                             val exerciseDocument = exercisesSnapshot.documents[0]
 
-                                            val exerciseName = exerciseDocument.getString("name") ?: ""
-                                            val exerciseDescription = exerciseDocument.getString("description") ?: ""
-                                            val exerciseImage = exerciseDocument.getString("image") ?: ""
-                                            val exerciseTimestamp = exerciseDocument.getTimestamp("date")
-                                            val exerciseDate = exerciseTimestamp?.let { timestampToDate(it) } ?: Date.getDefaultInstance()
-                                            val exerciseStartTime = exerciseDocument.getTimestamp("startTime") ?: Timestamp.now()
-                                            val exerciseEndTime = exerciseDocument.getTimestamp("endTime") ?: Timestamp.now()
-                                            val exerciseCategory = exerciseDocument.getString("category") ?: ""
-                                            val exerciseMin = exerciseDocument.getLong("min")?.toInt() ?: 0
-                                            val exerciseMax = exerciseDocument.getLong("max")?.toInt() ?: 0
-                                            val exerciseLoggedTime = exerciseDocument.getLong("loggedTime")?.toInt() ?: 0
-                                            val exerciseGoalsMet = exerciseDocument.getBoolean("goalsMet") ?: false
+                                            val exerciseName =
+                                                exerciseDocument.getString("name") ?: ""
+                                            val exerciseDescription =
+                                                exerciseDocument.getString("description") ?: ""
+                                            val exerciseImage =
+                                                exerciseDocument.getString("image") ?: ""
+                                            val exerciseTimestamp =
+                                                exerciseDocument.getTimestamp("date")
+                                            val exerciseDate =
+                                                exerciseTimestamp?.let { timestampToDate(it) }
+                                                    ?: Date.getDefaultInstance()
+                                            val exerciseStartTime =
+                                                exerciseDocument.getTimestamp("startTime")
+                                                    ?: Timestamp.now()
+                                            val exerciseEndTime =
+                                                exerciseDocument.getTimestamp("endTime")
+                                                    ?: Timestamp.now()
+                                            val exerciseCategory =
+                                                exerciseDocument.getString("category") ?: ""
+                                            val exerciseMin =
+                                                exerciseDocument.getLong("min")?.toDouble() ?: 0.00
+                                            val exerciseMax =
+                                                exerciseDocument.getLong("max")?.toDouble() ?: 0.00
+                                            val exerciseLoggedTime =
+                                                exerciseDocument.getLong("loggedTime")?.toDouble()
+                                                    ?: 0.00
+                                            val exerciseGoalsMet =
+                                                exerciseDocument.getBoolean("goalsMet") ?: false
 
                                             val newExercise = Exercise(
                                                 exerciseID,
@@ -266,20 +311,18 @@ class ViewExerciseFragment : Fragment()
                                                 exerciseMax,
                                             )
 
-                                            if (exerciseLoggedTime > 0)
+                                            if (exerciseLoggedTime > 0.00)
                                             {
                                                 newExercise.loggedTime = exerciseLoggedTime
                                                 newExercise.isGoalsMet = exerciseGoalsMet
                                             }
 
                                             populateComponents(newExercise)
-                                        }
-                                        .addOnFailureListener { e ->
+                                        }.addOnFailureListener { e ->
                                             Log.w("readData", "Error getting exercises: ", e)
                                         }
                                 }
-                            }
-                            .addOnFailureListener { e ->
+                            }.addOnFailureListener { e ->
                                 Log.w("readData", "Error getting workouts: ", e)
                             }
                     }
@@ -297,10 +340,10 @@ class ViewExerciseFragment : Fragment()
         navigateToFragment(backFragment)
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    private fun navigateToFragment(fragment: Fragment)
+    {
         // Replace the current fragment with the new fragment
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 
 }
