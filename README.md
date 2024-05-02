@@ -3,10 +3,13 @@
 
 ## Features
 
-- **Workout Logging**: Easily log your gym workouts, including exercises, sets, reps, and weights.
-- **Progress Tracking**: Track your fitness progress over time with visual graphs for strength, stamina, and weight changes.
-- **Customizable Plans**: Create custom workout plans tailored to your fitness goals.
-- **Reminders**: Set reminders to keep your gym sessions consistent.
+- **Log**: Users are able to log into the app using an username (email) & password.
+- **Categories**: Users are able to create workout plans where they can make exercises that belong to categories.
+- **Timesheet Entry**: When users are creating an exercise they are able to specify the date at which the exercise will take place along with able to specify the start and end times, add a description and assign it to a category.
+- **Photograph**: Users are to assign a "Progress Picture" to any of their exercises so they can track the progress of their work.
+- **Minimum & Maximum**: Users can set a minimum and maximum daily goal for hours worked on an exercise.
+- **Log**: Users are able to track their previous workouts and exercises with their progress pictures within a selectable date range.
+- **Total Hours**: Users are able to track total number of hours spent on each category during a selectable period.
 
 ## Installation
 
