@@ -19,27 +19,34 @@ class ExerciseAdapter(
     private val exercises: List<Exercise>,
     private val exerciseClickListener: OnExerciseClickListener,
     private val logTimeClickListener: OnLogTimeClickListener
-) : RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>() {
+) : RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>()
+{
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_exercise, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder
+    {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_exercise, parent, false)
         return ExerciseViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int)
+    {
         val exercise = exercises[position]
         holder.bind(exercise)
     }
 
     override fun getItemCount() = exercises.size
 
-    inner class ExerciseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ExerciseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    {
         private val nameTextView: TextView = itemView.findViewById(R.id.textViewExerciseTitle)
-        private val descriptionTextView: TextView = itemView.findViewById(R.id.textViewExerciseDescription)
+        private val descriptionTextView: TextView =
+            itemView.findViewById(R.id.textViewExerciseDescription)
         private val imageView: ImageView = itemView.findViewById(R.id.progressImage)
         private val logTimeButton: Button = itemView.findViewById(R.id.btnLogTime)
 
-        init {
+        init
+        {
             itemView.setOnClickListener {
                 val exerciseID = exercises[adapterPosition].exerciseID
                 exerciseClickListener.onExerciseClicked(exerciseID)
@@ -50,7 +57,8 @@ class ExerciseAdapter(
             }
         }
 
-        fun bind(exercise: Exercise) {
+        fun bind(exercise: Exercise)
+        {
             nameTextView.text = exercise.name
             descriptionTextView.text = exercise.description
 
@@ -67,9 +75,11 @@ class ExerciseAdapter(
                 // Get the download URL for the image
                 progressImageRef.downloadUrl.addOnSuccessListener { uri ->
                     // Call loadProfilePicture with the URL if the URI is not null and not empty
-                    if (uri.toString().isNotEmpty()) {
+                    if (uri.toString().isNotEmpty())
+                    {
                         loadProgressPicture(uri.toString())
-                    } else {
+                    } else
+                    {
                         // Handle the case when the download URL is empty
                         Log.d(ContentValues.TAG, "Progress picture URL is empty.")
                         // You can set a default profile picture or handle it according to your app's logic
@@ -81,19 +91,22 @@ class ExerciseAdapter(
             }
         }
 
-        private fun loadProgressPicture(imageUrl: String) {
+        private fun loadProgressPicture(imageUrl: String)
+        {
             // Load image with Picasso
-            Picasso.get()
-                .load(imageUrl)
-                .into(imageView, object : com.squareup.picasso.Callback {
-                    override fun onSuccess() {
+            Picasso.get().load(imageUrl).into(imageView, object : com.squareup.picasso.Callback
+                {
+                    override fun onSuccess()
+                    {
                         // Image loaded successfully
                         imageView.visibility = View.VISIBLE
                         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-                        imageView.clipToOutline = true // Clip the image to the outline of the background
+                        imageView.clipToOutline =
+                            true // Clip the image to the outline of the background
                     }
 
-                    override fun onError(e: Exception?) {
+                    override fun onError(e: Exception?)
+                    {
                         // Handle error loading image
                         Log.e(ContentValues.TAG, "Error loading image", e)
                     }
@@ -104,10 +117,12 @@ class ExerciseAdapter(
     }
 }
 
-interface OnExerciseClickListener {
+interface OnExerciseClickListener
+{
     fun onExerciseClicked(exerciseID: String)
 }
 
-interface OnLogTimeClickListener {
+interface OnLogTimeClickListener
+{
     fun onLogTimeClicked(exerciseID: String)
 }

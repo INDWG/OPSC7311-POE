@@ -221,7 +221,7 @@
             android:padding="10dp"
             android:textColor="@color/black"
             android:textColorHint="#A9A9A9"
-            android:inputType="number"/>
+            android:inputType="numberDecimal"/>
 
         <Button
             android:id="@+id/btnLogTime"

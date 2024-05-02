@@ -1,5 +1,6 @@
 package com.example.proactive_opsc7311_poe.controllers
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +11,13 @@ import com.example.proactive_opsc7311_poe.R
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-import android.content.Context
 
 
-class HelpFragment(private val helpTitleID: String, private val helpContentID: String, private val context: Context) : Fragment()
+class HelpFragment(
+    private val helpTitleID: String,
+    private val helpContentID: String,
+    private val context: Context
+) : Fragment()
 {
     private lateinit var helpTitle: TextView
     private lateinit var helpContent: TextView
@@ -43,9 +47,11 @@ class HelpFragment(private val helpTitleID: String, private val helpContentID: S
         val resourceId = context.resources.getIdentifier(content, "string", context.packageName)
 
         // If the resource ID is valid, retrieve the help content string
-        val helpText = if (resourceId != 0) {
+        val helpText = if (resourceId != 0)
+        {
             context.resources.getText(resourceId)
-        } else {
+        } else
+        {
             // If the resource ID is not found, return a default string
             context.resources.getString(R.string.default_help_content)
         }

@@ -77,46 +77,56 @@ class WorkOutPlanFragment : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        helpButton =
-            view.findViewById(R.id.btnHelp)
+        helpButton = view.findViewById(R.id.btnHelp)
         helpButton.setOnClickListener {
             btnHelpClicked(this)
         }
 
-        backButton =
-            view.findViewById(R.id.btnBack)
+        backButton = view.findViewById(R.id.btnBack)
         backButton.setOnClickListener {
             btnBackClicked(this)
         }
 
-        createWorkoutButton =
-            view.findViewById(R.id.btnCreateWorkout)
+        createWorkoutButton = view.findViewById(R.id.btnCreateWorkout)
         createWorkoutButton.setOnClickListener {
             btnCreateWorkoutClicked(this)
         }
     }
 
-    fun btnCreateWorkoutClicked(fragment: Fragment) {
+    fun btnCreateWorkoutClicked(fragment: Fragment)
+    {
         val workoutName = workoutNameEditText.text.toString().trim()
         val workoutDescription = workoutDescriptionEditText.text.toString().trim()
 
         // Validation for name and description length
-        when {
-            workoutName.isEmpty() || workoutDescription.isEmpty() -> {
+        when
+        {
+            workoutName.isEmpty() || workoutDescription.isEmpty() ->
+            {
                 Toast.makeText(
-                    fragment.requireContext(), "Please enter workout details before saving.", Toast.LENGTH_SHORT
+                    fragment.requireContext(),
+                    "Please enter workout details before saving.",
+                    Toast.LENGTH_SHORT
                 ).show()
                 return
             }
-            workoutName.length >= 50 -> {
+
+            workoutName.length >= 50 ->
+            {
                 Toast.makeText(
-                    fragment.requireContext(), "Please ensure workout name character length no more than 50.", Toast.LENGTH_SHORT
+                    fragment.requireContext(),
+                    "Please ensure workout name character length no more than 50.",
+                    Toast.LENGTH_SHORT
                 ).show()
                 return
             }
-            workoutDescription.length >= 150 -> {
+
+            workoutDescription.length >= 150 ->
+            {
                 Toast.makeText(
-                    fragment.requireContext(), "Please ensure workout description character length no more than 150.", Toast.LENGTH_SHORT
+                    fragment.requireContext(),
+                    "Please ensure workout description character length no more than 150.",
+                    Toast.LENGTH_SHORT
                 ).show()
                 return
             }
@@ -139,9 +149,9 @@ class WorkOutPlanFragment : Fragment()
                         val workoutsCollectionRef = userDocumentRef.collection("workouts")
 
                         // Check if the user document exists before adding the workout
-                        userDocumentRef.get()
-                            .addOnSuccessListener { documentSnapshot ->
-                                if (documentSnapshot.exists()) {
+                        userDocumentRef.get().addOnSuccessListener { documentSnapshot ->
+                                if (documentSnapshot.exists())
+                                {
                                     // User document exists, add the workout details to the "workouts" collection
                                     workoutsCollectionRef.add(workoutDetails)
                                         .addOnSuccessListener { documentReference ->
@@ -154,27 +164,34 @@ class WorkOutPlanFragment : Fragment()
                                             )
 
                                             Toast.makeText(
-                                                fragment.requireContext(), "Added new workout: $workoutName", Toast.LENGTH_SHORT
+                                                fragment.requireContext(),
+                                                "Added new workout: $workoutName",
+                                                Toast.LENGTH_SHORT
                                             ).show()
                                             workoutNameEditText.setText("")
                                             workoutDescriptionEditText.setText("")
                                             navigateToFragment(ViewWorkoutFragment())
-                                        }
-                                        .addOnFailureListener {
+                                        }.addOnFailureListener {
                                             Toast.makeText(
-                                                fragment.requireContext(), "Error while adding new workout.", Toast.LENGTH_SHORT
+                                                fragment.requireContext(),
+                                                "Error while adding new workout.",
+                                                Toast.LENGTH_SHORT
                                             ).show()
                                         }
-                                } else {
+                                } else
+                                {
                                     // User document does not exist, handle accordingly
                                     Toast.makeText(
-                                        fragment.requireContext(), "User document does not exist.", Toast.LENGTH_SHORT
+                                        fragment.requireContext(),
+                                        "User document does not exist.",
+                                        Toast.LENGTH_SHORT
                                     ).show()
                                 }
-                            }
-                            .addOnFailureListener {
+                            }.addOnFailureListener {
                                 Toast.makeText(
-                                    fragment.requireContext(), "Error checking user document.", Toast.LENGTH_SHORT
+                                    fragment.requireContext(),
+                                    "Error checking user document.",
+                                    Toast.LENGTH_SHORT
                                 ).show()
                             }
                     }
@@ -184,7 +201,13 @@ class WorkOutPlanFragment : Fragment()
 
     fun btnHelpClicked(fragment: Fragment)
     {
-        navigateToFragment(HelpFragment("help_title_new_workout_plan","help_content_new_workout_plan", requireContext()))
+        navigateToFragment(
+            HelpFragment(
+                "help_title_new_workout_plan",
+                "help_content_new_workout_plan",
+                requireContext()
+            )
+        )
     }
 
     fun btnBackClicked(fragment: Fragment)
@@ -192,9 +215,9 @@ class WorkOutPlanFragment : Fragment()
         navigateToFragment(ViewWorkoutFragment())
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    private fun navigateToFragment(fragment: Fragment)
+    {
         // Replace the current fragment with the new fragment
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 }

@@ -20,7 +20,8 @@ import com.google.firebase.firestore.firestore
 import com.google.type.Date
 import java.util.Calendar
 
-class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClickListener {
+class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClickListener
+{
 
     private lateinit var exerciseRecyclerView: RecyclerView
     private lateinit var exerciseAdapter: ExerciseAdapter
@@ -38,7 +39,8 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View?
+    {
         val view = inflater.inflate(R.layout.view_exercises_fragment, container, false)
 
         exerciseRecyclerView = view.findViewById(R.id.recyclerViewExercises)
@@ -60,15 +62,13 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
     {
         super.onViewCreated(view, savedInstanceState)
 
-        backButton =
-            view.findViewById(R.id.btnBack)
+        backButton = view.findViewById(R.id.btnBack)
         backButton.setOnClickListener {
             btnBackClicked(this)
         }
 
-        startExercise =
-            view.findViewById(R.id.btnStartExercise)
-        startExercise.setOnClickListener{
+        startExercise = view.findViewById(R.id.btnStartExercise)
+        startExercise.setOnClickListener {
             btnStartExerciseClicked()
         }
 
@@ -80,47 +80,49 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
 
     private fun btnHelpClicked()
     {
-        navigateToFragment(HelpFragment("help_title_exercise_page","help_content_exercise_page", requireContext()))
+        navigateToFragment(
+            HelpFragment(
+                "help_title_exercise_page", "help_content_exercise_page", requireContext()
+            )
+        )
     }
 
-    override fun onExerciseClicked(exerciseID: String) {
+    override fun onExerciseClicked(exerciseID: String)
+    {
         val fragment = ViewExerciseFragment().apply {
             arguments = Bundle().apply {
                 putString("exercise_id", exerciseID)
                 putString("workout_id", workoutID)
             }
         }
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .addToBackStack(null).commit()
     }
 
-    override fun onLogTimeClicked(exerciseID: String) {
+    override fun onLogTimeClicked(exerciseID: String)
+    {
         val fragment = LoggedTimeFragment().apply {
             arguments = Bundle().apply {
                 putString("exercise_id", exerciseID)
                 putString("workout_id", workoutID)
             }
         }
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .addToBackStack(null).commit()
     }
 
     // Utility function to convert Timestamp to com.google.type.Date
-    fun timestampToDate(timestamp: Timestamp): Date {
+    fun timestampToDate(timestamp: Timestamp): Date
+    {
         val calendar = Calendar.getInstance()
         calendar.time = timestamp.toDate()
-        return Date.newBuilder()
-            .setYear(calendar.get(Calendar.YEAR))
+        return Date.newBuilder().setYear(calendar.get(Calendar.YEAR))
             .setMonth(calendar.get(Calendar.MONTH) + 1) // Calendar.MONTH is zero-based
-            .setDay(calendar.get(Calendar.DAY_OF_MONTH))
-            .build()
+            .setDay(calendar.get(Calendar.DAY_OF_MONTH)).build()
     }
 
-    private fun readData(workoutID: String) {
+    private fun readData(workoutID: String)
+    {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let { currentUser ->
             val userId = currentUser.uid
@@ -147,10 +149,10 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
 
                         val userDocRef = document.reference
 
-                        userDocRef.collection("workouts")
-                            .whereEqualTo("workoutID", workoutID).get()
+                        userDocRef.collection("workouts").whereEqualTo("workoutID", workoutID).get()
                             .addOnSuccessListener { workoutsSnapshot ->
-                                if (!workoutsSnapshot.isEmpty) {
+                                if (!workoutsSnapshot.isEmpty)
+                                {
                                     val workoutDocument = workoutsSnapshot.documents[0]
 
                                     val workoutName = workoutDocument.getString("name") ?: ""
@@ -162,20 +164,40 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
                                     workoutDocRef.collection("exercises").get()
                                         .addOnSuccessListener { exercisesSnapshot ->
                                             exercises.clear()
-                                            for (exerciseDocument in exercisesSnapshot.documents) {
-                                                val exerciseID = exerciseDocument.getString("exerciseID") ?: ""
-                                                val exerciseName = exerciseDocument.getString("name") ?: ""
-                                                val exerciseDescription = exerciseDocument.getString("description") ?: ""
-                                                val exerciseImage = exerciseDocument.getString("image") ?: ""
-                                                val exerciseTimestamp = exerciseDocument.getTimestamp("date")
-                                                val exerciseDate = exerciseTimestamp?.let { timestampToDate(it) } ?: Date.getDefaultInstance()
-                                                val exerciseStartTime = exerciseDocument.getTimestamp("startTime") ?: Timestamp.now()
-                                                val exerciseEndTime = exerciseDocument.getTimestamp("endTime") ?: Timestamp.now()
-                                                val exerciseCategory = exerciseDocument.getString("category") ?: ""
-                                                val exerciseMin = exerciseDocument.getLong("min")?.toInt() ?: 0
-                                                val exerciseMax = exerciseDocument.getLong("max")?.toInt() ?: 0
-                                                val exerciseLoggedTime = exerciseDocument.getLong("loggedTime")?.toInt() ?: 0
-                                                val exerciseGoalsMet = exerciseDocument.getBoolean("goalsMet") ?: false
+                                            for (exerciseDocument in exercisesSnapshot.documents)
+                                            {
+                                                val exerciseID =
+                                                    exerciseDocument.getString("exerciseID") ?: ""
+                                                val exerciseName =
+                                                    exerciseDocument.getString("name") ?: ""
+                                                val exerciseDescription =
+                                                    exerciseDocument.getString("description") ?: ""
+                                                val exerciseImage =
+                                                    exerciseDocument.getString("image") ?: ""
+                                                val exerciseTimestamp =
+                                                    exerciseDocument.getTimestamp("date")
+                                                val exerciseDate =
+                                                    exerciseTimestamp?.let { timestampToDate(it) }
+                                                        ?: Date.getDefaultInstance()
+                                                val exerciseStartTime =
+                                                    exerciseDocument.getTimestamp("startTime")
+                                                        ?: Timestamp.now()
+                                                val exerciseEndTime =
+                                                    exerciseDocument.getTimestamp("endTime")
+                                                        ?: Timestamp.now()
+                                                val exerciseCategory =
+                                                    exerciseDocument.getString("category") ?: ""
+                                                val exerciseMin =
+                                                    exerciseDocument.getLong("min")?.toDouble()
+                                                        ?: 0.00
+                                                val exerciseMax =
+                                                    exerciseDocument.getLong("max")?.toDouble()
+                                                        ?: 0.00
+                                                val exerciseLoggedTime =
+                                                    exerciseDocument.getLong("loggedTime")
+                                                        ?.toDouble() ?: 0.00
+                                                val exerciseGoalsMet =
+                                                    exerciseDocument.getBoolean("goalsMet") ?: false
 
                                                 val exercise = Exercise(
                                                     exerciseID,
@@ -192,13 +214,11 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
                                                 exercises.add(exercise)
                                             }
                                             updateRecyclerView(exercises)
-                                        }
-                                        .addOnFailureListener { e ->
+                                        }.addOnFailureListener { e ->
                                             Log.w("readData", "Error getting exercises: ", e)
                                         }
                                 }
-                            }
-                            .addOnFailureListener { e ->
+                            }.addOnFailureListener { e ->
                                 Log.w("readData", "Error getting workouts: ", e)
                             }
                     }
@@ -206,7 +226,8 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
         }
     }
 
-    private fun updateRecyclerView(exercises: List<Exercise>) {
+    private fun updateRecyclerView(exercises: List<Exercise>)
+    {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewExercises)
         val adapter = ExerciseAdapter(exercises, this, this)
         recyclerView?.adapter = adapter
@@ -225,15 +246,13 @@ class ViewExercisesFragment : Fragment(), OnExerciseClickListener, OnLogTimeClic
                 putString("workout_id", workoutID)
             }
         }
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+            .addToBackStack(null).commit()
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    private fun navigateToFragment(fragment: Fragment)
+    {
         // Replace the current fragment with the new fragment
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 }

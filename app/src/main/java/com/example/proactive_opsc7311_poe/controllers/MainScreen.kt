@@ -1,4 +1,5 @@
 package com.example.proactive_opsc7311_poe.controllers
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -42,7 +43,7 @@ class MainScreen : AppCompatActivity()
 
                 R.id.progress ->
                 {
-                    navigateToFragment(ViewExerciseFragment())
+                    navigateToFragment(ProgressGraphsFragment())
                     true
                 }
 

@@ -67,15 +67,13 @@ class LoggedTimeFragment : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        backButton =
-            view.findViewById(R.id.btnBack)
+        backButton = view.findViewById(R.id.btnBack)
         backButton.setOnClickListener {
             btnBackClicked(this)
         }
 
-        logTime =
-            view.findViewById(R.id.btnLogTime)
-        logTime.setOnClickListener{
+        logTime = view.findViewById(R.id.btnLogTime)
+        logTime.setOnClickListener {
             btnLogTimeClicked(this)
         }
 
@@ -87,18 +85,21 @@ class LoggedTimeFragment : Fragment()
 
     private fun btnHelpClicked()
     {
-        navigateToFragment(HelpFragment("help_title_log_exercise_data","help_content_log_exercise_data", requireContext()))
+        navigateToFragment(
+            HelpFragment(
+                "help_title_log_exercise_data", "help_content_log_exercise_data", requireContext()
+            )
+        )
     }
 
     // Utility function to convert Timestamp to com.google.type.Date
-    fun timestampToDate(timestamp: Timestamp): Date {
+    fun timestampToDate(timestamp: Timestamp): Date
+    {
         val calendar = Calendar.getInstance()
         calendar.time = timestamp.toDate()
-        return Date.newBuilder()
-            .setYear(calendar.get(Calendar.YEAR))
+        return Date.newBuilder().setYear(calendar.get(Calendar.YEAR))
             .setMonth(calendar.get(Calendar.MONTH) + 1) // Calendar.MONTH is zero-based
-            .setDay(calendar.get(Calendar.DAY_OF_MONTH))
-            .build()
+            .setDay(calendar.get(Calendar.DAY_OF_MONTH)).build()
     }
 
     private fun btnLogTimeClicked(fragment: Fragment)
@@ -126,7 +127,8 @@ class LoggedTimeFragment : Fragment()
                                         workoutDocument.getLong("progress")?.toInt() ?: 0
 
                                     val workoutLoggedTime =
-                                        workoutDocument.getLong("totalLoggedTime")?.toInt() ?: 0
+                                        workoutDocument.getLong("totalLoggedTime")?.toDouble()
+                                            ?: 0.00
 
                                     val workoutDocRef = workoutDocument.reference
 
@@ -138,45 +140,53 @@ class LoggedTimeFragment : Fragment()
                                             val exerciseName =
                                                 exerciseDocument.getString("name") ?: ""
                                             val exerciseMin =
-                                                exerciseDocument.getLong("min")?.toInt() ?: 0
+                                                exerciseDocument.getLong("min")?.toDouble() ?: 0.00
                                             val exerciseMax =
-                                                exerciseDocument.getLong("max")?.toInt() ?: 0
+                                                exerciseDocument.getLong("max")?.toDouble() ?: 0.00
                                             val exerciseLoggedTime =
-                                                exerciseDocument.getLong("loggedTime")?.toInt() ?: 0
+                                                exerciseDocument.getLong("loggedTime")?.toDouble()
+                                                    ?: 0.00
 
-                                            if (exerciseLoggedTime <= 0 || exerciseLoggedTime.toString().isEmpty())
+                                            if (exerciseLoggedTime <= 0 || exerciseLoggedTime.toString()
+                                                    .isEmpty()
+                                            )
                                             {
                                                 workoutDocRef.update(
                                                     mapOf(
                                                         "progress" to (workoutProgress + 1),
-                                                        "totalLoggedTime" to (workoutLoggedTime + loggedTime.text.toString().toInt())
+                                                        "totalLoggedTime" to (workoutLoggedTime + loggedTime.text.toString()
+                                                            .toInt())
                                                     )
                                                 )
                                             }
 
                                             val exerciseRefDoc = exerciseDocument.reference
 
-                                            if (loggedTime.text.toString().toInt() < exerciseMax && loggedTime.text.toString().toInt() > exerciseMin)
+                                            if (loggedTime.text.toString()
+                                                    .toDouble() < exerciseMax && loggedTime.text.toString()
+                                                    .toDouble() > exerciseMin
+                                            )
                                             {
                                                 exerciseRefDoc.update(
                                                     mapOf(
-                                                        "loggedTime" to loggedTime.text.toString().toInt(),
-                                                        "goalsMet" to true
+                                                        "loggedTime" to loggedTime.text.toString()
+                                                            .toDouble(), "goalsMet" to true
                                                     )
                                                 )
-                                            }
-                                            else
+                                            } else
                                             {
                                                 exerciseRefDoc.update(
                                                     mapOf(
-                                                        "loggedTime" to loggedTime.text.toString().toInt(),
-                                                        "goalsMet" to false
+                                                        "loggedTime" to loggedTime.text.toString()
+                                                            .toDouble(), "goalsMet" to false
                                                     )
                                                 )
                                             }
 
                                             Toast.makeText(
-                                                fragment.requireContext(), "Logged new time: $exerciseName", Toast.LENGTH_SHORT
+                                                fragment.requireContext(),
+                                                "Logged new time: $exerciseName",
+                                                Toast.LENGTH_SHORT
                                             ).show()
 
                                             loggedTime.setText("")
@@ -198,7 +208,9 @@ class LoggedTimeFragment : Fragment()
     private fun populateComponents(exercise: Exercise)
     {
         val dateFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
-        val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault()) // This will format the time as "9:00 AM"
+        val timeFormat = SimpleDateFormat(
+            "h:mm a", Locale.getDefault()
+        ) // This will format the time as "9:00 AM"
 
         // Convert com.google.type.DateTime to java.util.Date
         val calendar = Calendar.getInstance()
@@ -213,7 +225,8 @@ class LoggedTimeFragment : Fragment()
         // Format and set the start and end times
         val startTime = exercise.startTime.toDate() // Assuming exercise.startTime is a Timestamp
         val endTime = exercise.endTime.toDate() // Assuming exercise.endTime is a Timestamp
-        exerciseTime.text = "From " + timeFormat.format(startTime) + " to " + timeFormat.format(endTime)
+        exerciseTime.text =
+            "From " + timeFormat.format(startTime) + " to " + timeFormat.format(endTime)
 
         if (exercise.min >= 60.00)
         {
@@ -221,8 +234,7 @@ class LoggedTimeFragment : Fragment()
             val formatter = DecimalFormat("0.00")
             val formattedHours = formatter.format(hours)
             min.text = formattedHours + " hour/s"
-        }
-        else
+        } else
         {
             min.text = exercise.min.toString() + " min/s"
         }
@@ -233,14 +245,14 @@ class LoggedTimeFragment : Fragment()
             val formatter = DecimalFormat("0.00")
             val formattedHours = formatter.format(hours)
             max.text = formattedHours + " hour/s"
-        }
-        else
+        } else
         {
             max.text = exercise.max.toString() + " min/s"
         }
     }
 
-    private fun readData(exerciseID: String, workoutID: String) {
+    private fun readData(exerciseID: String, workoutID: String)
+    {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let { currentUser ->
             val userId = currentUser.uid
@@ -267,30 +279,47 @@ class LoggedTimeFragment : Fragment()
 
                         val userDocRef = document.reference
 
-                        userDocRef.collection("workouts")
-                            .whereEqualTo("workoutID", workoutID).get()
+                        userDocRef.collection("workouts").whereEqualTo("workoutID", workoutID).get()
                             .addOnSuccessListener { workoutsSnapshot ->
-                                if (!workoutsSnapshot.isEmpty) {
+                                if (!workoutsSnapshot.isEmpty)
+                                {
                                     val workoutDocument = workoutsSnapshot.documents[0]
 
                                     val workoutDocRef = workoutDocument.reference
 
-                                    workoutDocRef.collection("exercises").whereEqualTo("exerciseID",exerciseID).get()
+                                    workoutDocRef.collection("exercises")
+                                        .whereEqualTo("exerciseID", exerciseID).get()
                                         .addOnSuccessListener { exercisesSnapshot ->
                                             val exerciseDocument = exercisesSnapshot.documents[0]
 
-                                            val exerciseName = exerciseDocument.getString("name") ?: ""
-                                            val exerciseDescription = exerciseDocument.getString("description") ?: ""
-                                            val exerciseImage = exerciseDocument.getString("image") ?: ""
-                                            val exerciseTimestamp = exerciseDocument.getTimestamp("date")
-                                            val exerciseDate = exerciseTimestamp?.let { timestampToDate(it) } ?: Date.getDefaultInstance()
-                                            val exerciseStartTime = exerciseDocument.getTimestamp("startTime") ?: Timestamp.now()
-                                            val exerciseEndTime = exerciseDocument.getTimestamp("endTime") ?: Timestamp.now()
-                                            val exerciseCategory = exerciseDocument.getString("category") ?: ""
-                                            val exerciseMin = exerciseDocument.getLong("min")?.toInt() ?: 0
-                                            val exerciseMax = exerciseDocument.getLong("max")?.toInt() ?: 0
-                                            val exerciseLoggedTime = exerciseDocument.getLong("loggedTime")?.toInt() ?: 0
-                                            val exerciseGoalsMet = exerciseDocument.getBoolean("goalsMet") ?: false
+                                            val exerciseName =
+                                                exerciseDocument.getString("name") ?: ""
+                                            val exerciseDescription =
+                                                exerciseDocument.getString("description") ?: ""
+                                            val exerciseImage =
+                                                exerciseDocument.getString("image") ?: ""
+                                            val exerciseTimestamp =
+                                                exerciseDocument.getTimestamp("date")
+                                            val exerciseDate =
+                                                exerciseTimestamp?.let { timestampToDate(it) }
+                                                    ?: Date.getDefaultInstance()
+                                            val exerciseStartTime =
+                                                exerciseDocument.getTimestamp("startTime")
+                                                    ?: Timestamp.now()
+                                            val exerciseEndTime =
+                                                exerciseDocument.getTimestamp("endTime")
+                                                    ?: Timestamp.now()
+                                            val exerciseCategory =
+                                                exerciseDocument.getString("category") ?: ""
+                                            val exerciseMin =
+                                                exerciseDocument.getLong("min")?.toDouble() ?: 0.00
+                                            val exerciseMax =
+                                                exerciseDocument.getLong("max")?.toDouble() ?: 0.00
+                                            val exerciseLoggedTime =
+                                                exerciseDocument.getLong("loggedTime")?.toDouble()
+                                                    ?: 0.00
+                                            val exerciseGoalsMet =
+                                                exerciseDocument.getBoolean("goalsMet") ?: false
 
                                             val newExercise = Exercise(
                                                 exerciseID,
@@ -305,20 +334,18 @@ class LoggedTimeFragment : Fragment()
                                                 exerciseMax,
                                             )
 
-                                            if (exerciseLoggedTime > 0)
+                                            if (exerciseLoggedTime > 0.00)
                                             {
                                                 newExercise.loggedTime = exerciseLoggedTime
                                                 newExercise.isGoalsMet = exerciseGoalsMet
                                             }
 
                                             populateComponents(newExercise)
-                                        }
-                                        .addOnFailureListener { e ->
+                                        }.addOnFailureListener { e ->
                                             Log.w("readData", "Error getting exercises: ", e)
                                         }
                                 }
-                            }
-                            .addOnFailureListener { e ->
+                            }.addOnFailureListener { e ->
                                 Log.w("readData", "Error getting workouts: ", e)
                             }
                     }
@@ -336,9 +363,9 @@ class LoggedTimeFragment : Fragment()
         navigateToFragment(backFragment)
     }
 
-    private fun navigateToFragment(fragment: Fragment) {
+    private fun navigateToFragment(fragment: Fragment)
+    {
         // Replace the current fragment with the new fragment
-        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .commit()
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 }

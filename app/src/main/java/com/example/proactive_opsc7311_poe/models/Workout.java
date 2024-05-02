@@ -8,7 +8,7 @@ public class Workout {
     private int progress;
     private int totalExercises;
 
-    private int totalLoggedTime;
+    private Double totalLoggedTime;
 
     public Workout(String workoutID, String name, String description, int progress, int totalExercises) {
         this.workoutID = workoutID;
@@ -54,11 +54,11 @@ public class Workout {
 
     public void setTotalExercises(int totalExercises) { this.totalExercises = totalExercises; }
 
-    public int getTotalLoggedTime() {
+    public Double getTotalLoggedTime() {
         return totalLoggedTime;
     }
 
-    public void setTotalLoggedTime(int totalLoggedTime) {
+    public void setTotalLoggedTime(Double totalLoggedTime) {
         this.totalLoggedTime = totalLoggedTime;
     }
 }

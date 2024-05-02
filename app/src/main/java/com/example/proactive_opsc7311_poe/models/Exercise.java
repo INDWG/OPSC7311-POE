@@ -13,12 +13,12 @@ public class Exercise {
     private Timestamp startTime;
     private Timestamp endTime;
     private String category;
-    private int min;
-    private int max;
-    private int loggedTime;
+    private Double min;
+    private Double max;
+    private Double loggedTime;
     private boolean goalsMet;
 
-    public Exercise(String exerciseID, String name, String description, String image, Date date, Timestamp startTime, Timestamp endTime, String category, int min, int max) {
+    public Exercise(String exerciseID, String name, String description, String image, Date date, Timestamp startTime, Timestamp endTime, String category, Double min, Double max) {
         this.exerciseID = exerciseID;
         this.name = name;
         this.description = description;
@@ -95,27 +95,27 @@ public class Exercise {
         this.category = category;
     }
 
-    public int getMin() {
+    public Double getMin() {
         return min;
     }
 
-    public void setMin(int min) {
+    public void setMin(Double min) {
         this.min = min;
     }
 
-    public int getMax() {
+    public Double getMax() {
         return max;
     }
 
-    public void setMax(int max) {
+    public void setMax(Double max) {
         this.max = max;
     }
 
-    public int getLoggedTime() {
+    public Double getLoggedTime() {
         return loggedTime;
     }
 
-    public void setLoggedTime(int loggedTime) {
+    public void setLoggedTime(Double loggedTime) {
         this.loggedTime = loggedTime;
     }
 

@@ -127,7 +127,8 @@ class AccountFragment : Fragment()
         }
     }
 
-    private fun btnDeleteClicked(fragment: Fragment) {
+    private fun btnDeleteClicked(fragment: Fragment)
+    {
         val alertDialogBuilder = AlertDialog.Builder(fragment.requireContext())
         alertDialogBuilder.setTitle("Delete Account")
         alertDialogBuilder.setMessage("Are you sure you want to delete your account?")
@@ -140,7 +141,8 @@ class AccountFragment : Fragment()
                 // Query Firestore to find the document with the matching UID
                 db.collection("users").whereEqualTo("uid", uid).get()
                     .addOnSuccessListener { querySnapshot ->
-                        if (!querySnapshot.isEmpty) {
+                        if (!querySnapshot.isEmpty)
+                        {
                             // There should be only one document with the given UID
                             val document = querySnapshot.documents[0]
                             // Delete Firebase Authentication user
@@ -151,7 +153,8 @@ class AccountFragment : Fragment()
                                     Log.d(TAG, "User document deleted successfully")
 
                                     // Redirect the user to the login screen
-                                    val intent = Intent(fragment.requireContext(), LoginScreen::class.java)
+                                    val intent =
+                                        Intent(fragment.requireContext(), LoginScreen::class.java)
                                     intent.flags =
                                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     fragment.requireContext().startActivity(intent)
@@ -166,7 +169,8 @@ class AccountFragment : Fragment()
                                 Log.w(TAG, "Error deleting user", exception)
                                 // Show error message or handle failure
                             }
-                        } else {
+                        } else
+                        {
                             Log.d(TAG, "No document found for the user's UID")
                             // Handle the case when no document is found
                         }
@@ -183,7 +187,8 @@ class AccountFragment : Fragment()
         alertDialogBuilder.create().show()
     }
 
-    private fun btnLogoutClicked(fragment: Fragment) {
+    private fun btnLogoutClicked(fragment: Fragment)
+    {
         FirebaseAuth.getInstance().signOut()
         // Redirect the user to the login screen
         val intent = Intent(fragment.requireContext(), LoginScreen::class.java)
@@ -250,9 +255,11 @@ class AccountFragment : Fragment()
                         // Get the download URL for the image
                         profileImageRef.downloadUrl.addOnSuccessListener { uri ->
                             // Call loadProfilePicture with the URL if the URI is not null and not empty
-                            if (uri.toString().isNotEmpty()) {
+                            if (uri.toString().isNotEmpty())
+                            {
                                 loadProfilePicture(uri.toString())
-                            } else {
+                            } else
+                            {
                                 // Handle the case when the download URL is empty
                                 Log.d(TAG, "Profile picture URL is empty.")
                                 // You can set a default profile picture or handle it according to your app's logic
@@ -277,24 +284,29 @@ class AccountFragment : Fragment()
         }
     }
 
-    private fun loadProfilePicture(imageUrl: String) {
+    private fun loadProfilePicture(imageUrl: String)
+    {
         // Load image with Picasso
-        Picasso.get().load(imageUrl).into(profilePictureButton, object : com.squareup.picasso.Callback {
-            override fun onSuccess() {
-                // Image loaded successfully
-                profilePictureButton.visibility = View.VISIBLE
-                profilePictureButton.shapeAppearanceModel =
-                    profilePictureButton.shapeAppearanceModel.toBuilder()
-                        .setAllCornerSizes(ShapeAppearanceModel.PILL).build()
-                profilePictureButton.scaleType = ImageView.ScaleType.CENTER_CROP
-                imageView.isVisible = false
-            }
+        Picasso.get().load(imageUrl)
+            .into(profilePictureButton, object : com.squareup.picasso.Callback
+            {
+                override fun onSuccess()
+                {
+                    // Image loaded successfully
+                    profilePictureButton.visibility = View.VISIBLE
+                    profilePictureButton.shapeAppearanceModel =
+                        profilePictureButton.shapeAppearanceModel.toBuilder()
+                            .setAllCornerSizes(ShapeAppearanceModel.PILL).build()
+                    profilePictureButton.scaleType = ImageView.ScaleType.CENTER_CROP
+                    imageView.isVisible = false
+                }
 
-            override fun onError(e: Exception?) {
-                // Handle error loading image
-                Log.e(TAG, "Error loading profile picture", e)
-            }
-        })
+                override fun onError(e: Exception?)
+                {
+                    // Handle error loading image
+                    Log.e(TAG, "Error loading profile picture", e)
+                }
+            })
     }
 
     private fun showLoadingIndicator(show: Boolean)
@@ -356,7 +368,8 @@ class AccountFragment : Fragment()
         return Timestamp(date)
     }
 
-    fun btnSaveButtonClicked(fragment: Fragment) {
+    fun btnSaveButtonClicked(fragment: Fragment)
+    {
         val firstName = firstNameEditText.text.toString().trim()
         val lastName = lastNameEditText.text.toString().trim()
         val gender = genderSpinner.selectedItem.toString().toLowerCase()
@@ -365,7 +378,8 @@ class AccountFragment : Fragment()
         var dobTimestamp = todaysDate.toTimestamp()
 
         // Convert the date string to a Timestamp
-        if (dobString != "") {
+        if (dobString != "")
+        {
             dobTimestamp = dobString.toTimestamp()
         }
 
@@ -373,7 +387,8 @@ class AccountFragment : Fragment()
         val isFirstNameValid = validateLength(firstName, "First name", 50)
         val isLastNameValid = validateLength(lastName, "Last name", 50)
 
-        if (isFirstNameValid && isLastNameValid) {
+        if (isFirstNameValid && isLastNameValid)
+        {
             // Get the current user
             val currentUser = FirebaseAuth.getInstance().currentUser
 
@@ -382,7 +397,8 @@ class AccountFragment : Fragment()
                 // Query Firestore collection to find the document with UID matching the logged-in user's UID
                 db.collection("users").whereEqualTo("uid", userId).get()
                     .addOnSuccessListener { querySnapshot ->
-                        if (!querySnapshot.isEmpty) {
+                        if (!querySnapshot.isEmpty)
+                        {
                             // There should be only one document with the given UID
                             val document = querySnapshot.documents[0]
                             // Update the document with the new values
@@ -404,7 +420,8 @@ class AccountFragment : Fragment()
                                 ).show()
 
                                 // Upload profile photo to Firebase Storage only if an image is selected
-                                if (profilePictureButton.drawable != null) {
+                                if (profilePictureButton.drawable != null)
+                                {
                                     uploadProfilePhoto(user.uid)
                                 }
                             }.addOnFailureListener { e ->
@@ -412,12 +429,11 @@ class AccountFragment : Fragment()
                                 // Show a toast or perform any other action to indicate failure
                                 // For example, you can display a toast message:
                                 Toast.makeText(
-                                    requireContext(),
-                                    "Failed to update profile",
-                                    Toast.LENGTH_SHORT
+                                    requireContext(), "Failed to update profile", Toast.LENGTH_SHORT
                                 ).show()
                             }
-                        } else {
+                        } else
+                        {
                             Log.d(TAG, "No document found for the user's UID")
                         }
                     }.addOnFailureListener { exception ->
@@ -427,9 +443,11 @@ class AccountFragment : Fragment()
         }
     }
 
-    private fun uploadProfilePhoto(userId: String) {
+    private fun uploadProfilePhoto(userId: String)
+    {
         val drawable = profilePictureButton.drawable
-        if (drawable is BitmapDrawable) {
+        if (drawable is BitmapDrawable)
+        {
             val storageRef = Firebase.storage.reference
             val profilePhotosRef = storageRef.child("profile_photos/$userId.jpg")
 
@@ -450,19 +468,20 @@ class AccountFragment : Fragment()
                 // Show a toast or perform any other action to indicate failure
                 // For example, you can display a toast message:
                 Toast.makeText(
-                    requireContext(),
-                    "Failed to upload profile photo",
-                    Toast.LENGTH_SHORT
+                    requireContext(), "Failed to upload profile photo", Toast.LENGTH_SHORT
                 ).show()
             }
-        } else {
+        } else
+        {
             // Handle the case when the drawable is not a BitmapDrawable
             Log.e(TAG, "Profile picture is not a BitmapDrawable")
         }
     }
 
-    private fun validateLength(value: String, fieldName: String, maxLength: Int): Boolean {
-        return if (value.length > maxLength) {
+    private fun validateLength(value: String, fieldName: String, maxLength: Int): Boolean
+    {
+        return if (value.length > maxLength)
+        {
             // Field exceeds maximum length, show error message
             Toast.makeText(
                 requireContext(),
@@ -470,7 +489,8 @@ class AccountFragment : Fragment()
                 Toast.LENGTH_SHORT
             ).show()
             false
-        } else {
+        } else
+        {
             true
         }
     }
