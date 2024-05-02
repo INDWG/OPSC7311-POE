@@ -35,6 +35,6 @@ For support, please email TeamProActive225@gmail.com
 ## Authors
 
 - **FrontEnd** - Dane Govender - [INDWG](https://github.com/INDWG)
-- **BackEnd** - Gerard Govender - [INDWG]()
+- **BackEnd** - Gerard Govender - [st10245621](https://github.com/st10245621)
 - **BackEnd** - Keagan Thorp - [INDWG]()
 - **FrontEnd** - Joshua Ashley - [JoshuaAhsley](https://github.com/JoshuaAshley)
