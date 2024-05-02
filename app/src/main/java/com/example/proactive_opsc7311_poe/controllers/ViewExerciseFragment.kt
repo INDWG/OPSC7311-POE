@@ -123,18 +123,8 @@ class ViewExerciseFragment : Fragment()
         exerciseName.text = exercise.name
         exerciseDate.text = dateFormat.format(date)
 
-        if (exercise.loggedTime < exercise.max && exercise.loggedTime > exercise.min)
-        {
-            exercise.isGoalsMet = true
-            statsDescription.text = "Daily Goals were met. Well Done!"
-        } else
-        {
-            exercise.isGoalsMet = false
-            statsDescription.text = "Daily Goals have not been met."
-        }
-
         // Check if the loggedTime is not null and not empty
-        if (exercise.loggedTime != null && exercise.loggedTime > 0)
+        if (exercise.loggedTime != null && exercise.loggedTime > 0.00)
         {
             // Set the background tint to green and the icon to done_true
             doneBackground.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#2AD300"))
@@ -159,12 +149,28 @@ class ViewExerciseFragment : Fragment()
             this.time.text = time
         } else
         {
-            // Set the background tint to proactive red and the icon to done_false
-            doneBackground.backgroundTintList =
-                ColorStateList.valueOf(Color.parseColor("#FF0000")) // proactive red color code
-            doneImage.setImageResource(R.drawable.done_false)
-            time.text = "0 mins"
-            statsDescription.text = "Daily Goals have not been met yet."
+            exercise.loggedTime = 0.00
+        }
+
+        if ((exercise.loggedTime < exercise.max && exercise.loggedTime > exercise.min) && exercise.loggedTime > 0.00)
+        {
+            exercise.isGoalsMet = true
+            statsDescription.text = "Daily Goals were met. Well Done!"
+        } else
+        {
+            if (!(exercise.loggedTime < exercise.max && exercise.loggedTime > exercise.min) && exercise.loggedTime > 0.00)
+            {
+                exercise.isGoalsMet = false
+                statsDescription.text = "Daily Goals have not been met."
+            } else
+            {
+                // Set the background tint to proactive red and the icon to done_false
+                doneBackground.backgroundTintList =
+                    ColorStateList.valueOf(Color.parseColor("#FF0000")) // proactive red color code
+                doneImage.setImageResource(R.drawable.done_false)
+                time.text = "0 mins"
+                statsDescription.text = "Daily Goals have not been met yet."
+            }
         }
 
         categoryDescription.text = exercise.category
