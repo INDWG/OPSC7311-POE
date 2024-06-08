@@ -36,7 +36,7 @@
 - **Forgot Password**: Users can reset their password by selecting the Forgot Password button in account login section.
 - **Remember Me**: Users can tick the Remember me box so they do not have to re-enter their credentials everytime they log in.
 - **Profile Customization**: Users can personalise their profile by adding their Name, Profile Picture, Gender and Birthday
-- **Home Screen**: Home Screen that displays workouts that are currently active
+- **Home Screen**: Home Screen that displays workouts that are currently active.
 
 ## Installation
 
