@@ -24,7 +24,12 @@
 
 ### PART 3 Features
 
+- **Graph**: A bar graph showing total hours worked each day over a selectable period. Graph also displays Minimum and Maximum Goals.
+- **Visual Format**: A Custom Calendar created to show how well the user is doing with staying between their Minimum and Maximum Hour Goals over the past month.
+- **Online Database**: Google Firebase has been used to handle and store all data.
+
 #### Extras
+
 - **Help Button**: Users can tap the "Help" Button on the top of the screen to get help on the specific page that they are on.
 - **Forgot Password**: Users can reset their password by selecting the Forgot Password button in account login section.
 - **Remember Me**: Users can tick the Remember me box so they do not have to re-enter their credentials everytime they log in.
