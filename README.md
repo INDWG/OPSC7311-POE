@@ -27,6 +27,7 @@
 - **Graph**: A bar graph showing total hours worked each day over a selectable period. Graph also displays Minimum and Maximum Goals.
 - **Visual Format**: A Custom Calendar created to show how well the user is doing with staying between their Minimum and Maximum Hour Goals over the past month.
 - **Online Database**: Google Firebase has been used to handle and store all data.
+- **App Icon**: App icon and final image assets added
 
 #### Extras
 
@@ -54,6 +55,7 @@ After installing the app,
 - **Exercises**: Once your workout is created you can select it and add Exercises to it by selecting "Start Exercise".
 - **Log Time**: You can log time for your exercises by clicking the workout and the specific exercise. As you log more time youll see the progress bar increase.
 - **Log**: To view your history of workouts and exercises head to the Clock icon in your Navigation Bar and select a date range.
+- **Chart**: Choose a date range and view you data in the form of a Bar graph and Calender view (Edit later)
 - **Profile**: Users can customise their User Profile by adding additional information like a Profile Picture, Name, Gender and Birthday.
   
 For more details on how to use each feature, visit the Help section within the app.
