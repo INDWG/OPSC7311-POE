@@ -27,13 +27,16 @@
 - **Graph**: A bar graph showing total hours worked each day over a selectable period. Graph also displays Minimum and Maximum Goals.
 - **Visual Format**: A Custom Calendar created to show how well the user is doing with staying between their Minimum and Maximum Hour Goals over the past month.
 - **Online Database**: Google Firebase has been used to handle and store all data.
-- **App Icon**: App icon and final image assets added
+- **App Icon**: App icon and final image assets added.
 
 #### Extras
 
+- **Pie Chart**: A Pie Chart that displays percentage of workouts done or not done for each day for a month.
 - **Help Button**: Users can tap the "Help" Button on the top of the screen to get help on the specific page that they are on.
 - **Forgot Password**: Users can reset their password by selecting the Forgot Password button in account login section.
 - **Remember Me**: Users can tick the Remember me box so they do not have to re-enter their credentials everytime they log in.
+- **Profile Customization**: Users can personalise their profile by adding their Name, Profile Picture, Gender and Birthday
+- **Home Screen**: Home Screen that displays workouts that are currently active
 
 ## Installation
 
@@ -55,7 +58,7 @@ After installing the app,
 - **Exercises**: Once your workout is created you can select it and add Exercises to it by selecting "Start Exercise".
 - **Log Time**: You can log time for your exercises by clicking the workout and the specific exercise. As you log more time youll see the progress bar increase.
 - **Log**: To view your history of workouts and exercises head to the Clock icon in your Navigation Bar and select a date range.
-- **Chart**: Choose a date range and view you data in the form of a Bar graph and Calender view (Edit later)
+- **Chart**: Choose a date range and view your data in the form of a Bar graph, Calender view and Pie Chart.
 - **Profile**: Users can customise their User Profile by adding additional information like a Profile Picture, Name, Gender and Birthday.
   
 For more details on how to use each feature, visit the Help section within the app.
