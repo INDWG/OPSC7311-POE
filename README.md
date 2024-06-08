@@ -12,6 +12,8 @@
 
 ## Features
 
+### Part 2 Features
+
 - **Login**: Users are able to log into the app using an Username(email) & Password.
 - **Categories**: Users are able to create workout plans where they can make exercises.
 - **Timesheet Entry**: When users are creating an exercise they are able to specify the date at which the exercise will take place along with able to specify the start and end times, add a description and assign it to a category.
@@ -19,6 +21,8 @@
 - **Minimum & Maximum**: Users can set a minimum and maximum daily goal for hours worked on an exercise.
 - **Log**: Users are able to track their previous workouts and exercises with their progress pictures within a selectable date range.
 - **Total Hours**: Users are able to track total number of hours spent on each category during a selectable period.
+
+### PART 3 Features
 
 ## Installation
 
