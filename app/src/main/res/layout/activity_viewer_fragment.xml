@@ -85,7 +85,7 @@
                     android:id="@+id/spinnerWorkoutsExercises"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_margin="16dp"
+                    android:layout_marginVertical="16dp"
                     android:background="@drawable/button"
                     android:prompt="@string/select_workout_exercise_prompt"
                     android:spinnerMode="dropdown" />
@@ -94,7 +94,7 @@
                     android:id="@+id/btnSelectDateRange"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_margin="16dp"
+                    android:layout_marginVertical="16dp"
                     android:background="@drawable/button"
                     android:onClick="showDateRangePickerDialog"
                     android:text="@string/select_date_range"
@@ -107,7 +107,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:clipToPadding="false"
-                    android:padding="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_workout"/>
 
@@ -118,7 +117,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:clipToPadding="false"
-                    android:padding="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_exercise" />
 
