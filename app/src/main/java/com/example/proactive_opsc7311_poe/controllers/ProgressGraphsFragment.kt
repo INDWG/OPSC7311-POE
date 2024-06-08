@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.proactive_opsc7311_poe.R
@@ -39,6 +40,9 @@ class ProgressGraphsFragment : Fragment() {
 
     private val exercises = mutableListOf<Exercise>()
 
+    private val months = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+    private var currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH) // Initialize to the current month
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -50,6 +54,16 @@ class ProgressGraphsFragment : Fragment() {
         dateRange = view.findViewById(R.id.dateRange)
         dateRangeSelector = view.findViewById(R.id.btnSelectDateRange)
 
+        // Initialize buttons and month title
+        val btnPreviousMonth = view.findViewById<ImageButton>(R.id.btnPreviousMonth)
+        val btnNextMonth = view.findViewById<ImageButton>(R.id.btnNextMonth)
+        val monthTitle = view.findViewById<TextView>(R.id.monthTitle)
+
+        monthTitle.text = months[currentMonthIndex] // Set the initial month
+
+        btnPreviousMonth.setOnClickListener { navigateToPreviousMonth(monthTitle) }
+        btnNextMonth.setOnClickListener { navigateToNextMonth(monthTitle) }
+
         dateRangeSelector.setOnClickListener {
             showDateRangePickerDialog(this)
         }
@@ -57,6 +71,22 @@ class ProgressGraphsFragment : Fragment() {
         retrieveUsername()
 
         return view
+    }
+
+    private fun navigateToPreviousMonth(monthTitle: TextView) {
+        if (currentMonthIndex > 0) {
+            currentMonthIndex--
+            monthTitle.text = months[currentMonthIndex]
+            // Additional logic for updating the chart based on the new month can be added here
+        }
+    }
+
+    private fun navigateToNextMonth(monthTitle: TextView) {
+        if (currentMonthIndex < months.size - 1) {
+            currentMonthIndex++
+            monthTitle.text = months[currentMonthIndex]
+            // Additional logic for updating the chart based on the new month can be added here
+        }
     }
 
     private fun retrieveUsername() {
