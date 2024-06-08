@@ -27,6 +27,7 @@
 - **Graph**: A bar graph showing total hours worked each day over a selectable period. Graph also displays Minimum and Maximum Goals.
 - **Visual Format**: A Custom Calendar created to show how well the user is doing with staying between their Minimum and Maximum Hour Goals over the past month.
 - **Online Database**: Google Firebase has been used to handle and store all data.
+- **App Icon**: App icon and final image assets added
 
 #### Extras
 
