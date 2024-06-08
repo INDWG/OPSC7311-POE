@@ -16,10 +16,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.proactive_opsc7311_poe.R
 import com.example.proactive_opsc7311_poe.models.Exercise
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -37,6 +42,7 @@ class ProgressGraphsFragment : Fragment() {
     private lateinit var dateRangeSelector: Button
     private lateinit var barChart: BarChart
     private lateinit var totalHoursTextView: TextView
+    private lateinit var pieChart: PieChart
 
     private lateinit var calendarRecyclerView: RecyclerView
 
@@ -46,6 +52,7 @@ class ProgressGraphsFragment : Fragment() {
 
     private val months = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
     private var currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH) // Initialize to the current month
+    private var currentMonthIndexPie = Calendar.getInstance().get(Calendar.MONTH) // Initialize to the current month
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -54,6 +61,7 @@ class ProgressGraphsFragment : Fragment() {
 
         barChart = view.findViewById(R.id.barChart)
         totalHoursTextView = view.findViewById(R.id.totalHours)
+        pieChart = view.findViewById(R.id.pieChart)
 
         dateRange = view.findViewById(R.id.dateRange)
         dateRangeSelector = view.findViewById(R.id.btnSelectDateRange)
@@ -73,8 +81,9 @@ class ProgressGraphsFragment : Fragment() {
 
         // Call updateIconsForMonth to set the icons based on exercise data
         updateIconsForMonth(adapter)
+        updatePieChartData()
 
-        // Initialize buttons and month title
+        // Initialize buttons and month title for the calendar
         val btnPreviousMonth = view.findViewById<ImageButton>(R.id.btnPreviousMonth)
         val btnNextMonth = view.findViewById<ImageButton>(R.id.btnNextMonth)
         val monthTitle = view.findViewById<TextView>(R.id.monthTitle)
@@ -96,6 +105,28 @@ class ProgressGraphsFragment : Fragment() {
             }
         }
 
+        // Initialize buttons and month title for the pie chart
+        val btnPreviousMonthPie = view.findViewById<ImageButton>(R.id.btnPreviousMonthPie)
+        val btnNextMonthPie = view.findViewById<ImageButton>(R.id.btnNextMonthPie)
+        val monthTitlePie = view.findViewById<TextView>(R.id.monthTitlePie)
+
+        monthTitlePie.text = months[currentMonthIndexPie] // Set the initial month for the pie chart
+
+        btnPreviousMonthPie.setOnClickListener {
+            if (currentMonthIndexPie > 0) {
+                currentMonthIndexPie--
+                monthTitlePie.text = months[currentMonthIndexPie]
+                updatePieChartData()
+            }
+        }
+        btnNextMonthPie.setOnClickListener {
+            if (currentMonthIndexPie < months.size - 1) {
+                currentMonthIndexPie++
+                monthTitlePie.text = months[currentMonthIndexPie]
+                updatePieChartData()
+            }
+        }
+
         dateRangeSelector.setOnClickListener {
             showDateRangePickerDialog(this)
         }
@@ -103,6 +134,50 @@ class ProgressGraphsFragment : Fragment() {
         retrieveUsername()
 
         return view
+    }
+
+    private fun updatePieChartData() {
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val daysInMonth = getDaysInMonth(currentYear, currentMonthIndexPie)
+
+        val calendar = Calendar.getInstance()
+        calendar.set(currentYear, currentMonthIndexPie, 1, 0, 0, 0)
+        val startDate = Timestamp(calendar.time)
+        calendar.set(currentYear, currentMonthIndexPie, daysInMonth, 23, 59, 59)
+        val endDate = Timestamp(calendar.time)
+
+        readExercisesData(startDate.toDate(), endDate.toDate()) { exercises ->
+            val totalDays = daysInMonth
+            val goalsMetDays = exercises.count { it.isGoalsMet }
+            val goalsNotMetDays = totalDays - goalsMetDays
+
+            val entries = listOf(
+                PieEntry(goalsMetDays.toFloat(), ""),
+                PieEntry(goalsNotMetDays.toFloat(), "")
+            )
+
+            val dataSet = PieDataSet(entries, "").apply {
+                val proactiveRed = resources.getColor(R.color.proactive_red, null)
+                val greyColor = Color.parseColor("#D3D3D3")
+                colors = listOf(proactiveRed, greyColor)
+                valueTextColor = Color.TRANSPARENT
+                valueTextSize = 0f
+                formSize = 0f // Set form size to zero to remove dots
+            }
+
+            val data = PieData(dataSet)
+            pieChart.data = data
+            pieChart.isDrawHoleEnabled = true // Enable the hole in the center
+            pieChart.holeRadius = 40f // Adjust the radius to make the hole smaller
+            pieChart.setHoleColor(Color.TRANSPARENT) // Set the color of the hole to transparent
+            pieChart.setUsePercentValues(true)
+            pieChart.description.isEnabled = false
+            pieChart.legend.apply {
+                horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+                textColor = Color.WHITE
+            }
+            pieChart.invalidate() // Refresh the chart
+        }
     }
 
     // Utility method to get the number of days in the current month
