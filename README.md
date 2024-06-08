@@ -8,7 +8,8 @@
 1. [Usage](#usage)
 2. [Support](#support)
 2. [Video Demonstration](#video-demonstartion)
-3. [Authors](#authors)
+3. [Figma](#figma)
+4. [Authors](#authors)
 
 ## Features
 
@@ -72,6 +73,10 @@ For support, please email TeamProActive225@gmail.com
 [Part 2](https://youtu.be/1pTOvOUIwjE)
 
 [Part 3 Final](https://youtu.be/1pTOvOUIwjE)
+
+## Figma
+
+[Figma Prototype Link](https://www.figma.com/design/eI1s7gijrcDyq7rXr9v3j5/ProActive-Prototype?node-id=0-1&t=VmzsIfQYZepJAoTx-0)
 
 ## Authors
 
