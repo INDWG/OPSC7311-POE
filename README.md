@@ -41,7 +41,8 @@ For support, please email TeamProActive225@gmail.com
 
 ## Video Demonstration
 
-[Youtube Link](https://youtu.be/1pTOvOUIwjE)
+[Part 2](https://youtu.be/1pTOvOUIwjE)
+[Part 3 Final](https://youtu.be/1pTOvOUIwjE)
 
 ## Authors
 
