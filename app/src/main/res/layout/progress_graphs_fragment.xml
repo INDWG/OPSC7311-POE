@@ -237,7 +237,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:text="Monthly Progress Chart"
+                    android:text="Monthly Progress (Cal)"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:textColor="@android:color/white"
@@ -284,9 +284,7 @@
 
             </LinearLayout>
 
-            <!-- res/layout/activity_main.xml -->
-            <!-- res/layout/progress_graphs_fragment.xml -->
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -368,6 +366,141 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/workout_card_background"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_marginBottom="30dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:text="Monthly Progress (Pie)"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="10dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+
+                        <ImageButton
+                            android:id="@+id/btnPreviousMonthPie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/previous_month_icon"
+                            android:background="@drawable/button_transparent"
+                            android:onClick="btnPreviousMonth_Clicked" />
+
+
+                        <TextView
+                            android:id="@+id/monthTitlePie"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:text="..."
+                            android:textSize="12sp"
+                            android:textColor="@android:color/white"
+                            android:layout_marginBottom="10dp"
+                            android:textAlignment="center"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="3dp"/>
+
+                        <ImageButton
+                            android:id="@+id/btnNextMonthPie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/next_month_icon"
+                            android:background="@drawable/button_transparent"
+                            android:onClick="btnNextMonth_Clicked"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="left"
+                    android:layout_marginBottom="2sp">
+
+                    <View
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/proactive_red"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Goals Met"
+                        android:textStyle="normal"
+                        android:textSize="10sp"
+                        android:textColor="#D3D3D3" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="left"
+                    android:layout_marginBottom="2sp">
+
+                    <View
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="#D3D3D3"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Goals Not Met"
+                        android:textStyle="normal"
+                        android:textSize="10sp"
+                        android:textColor="#D3D3D3" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp" />
 
             </LinearLayout>
 
