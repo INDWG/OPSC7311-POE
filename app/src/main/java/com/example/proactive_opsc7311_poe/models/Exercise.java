@@ -126,4 +126,28 @@ public class Exercise {
     public void setGoalsMet(boolean goalsMet) {
         this.goalsMet = goalsMet;
     }
+
+    // Method to convert java.util.Date to com.google.type.Date
+    public static Date convertToGoogleDate(java.util.Date utilDate) {
+        if (utilDate == null)
+            return null;
+
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.setTime(utilDate);
+        return Date.newBuilder()
+                .setYear(cal.get(java.util.Calendar.YEAR))
+                .setMonth(cal.get(java.util.Calendar.MONTH) + 1)
+                .setDay(cal.get(java.util.Calendar.DAY_OF_MONTH))
+                .build();
+    }
+
+    // Method to convert com.google.type.Date to java.util.Date
+    public static java.util.Date convertToUtilDate(Date googleDate) {
+        if (googleDate == null)
+            return null;
+
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        cal.set(googleDate.getYear(), googleDate.getMonth() - 1, googleDate.getDay());
+        return cal.getTime();
+    }
 }

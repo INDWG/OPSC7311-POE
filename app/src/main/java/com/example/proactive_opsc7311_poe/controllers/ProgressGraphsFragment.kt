@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.proactive_opsc7311_poe.R
 import com.example.proactive_opsc7311_poe.models.Exercise
 import com.github.mikephil.charting.charts.BarChart
@@ -35,9 +38,14 @@ class ProgressGraphsFragment : Fragment() {
     private lateinit var barChart: BarChart
     private lateinit var totalHoursTextView: TextView
 
+    private lateinit var calendarRecyclerView: RecyclerView
+
     private val db = Firebase.firestore
 
     private val exercises = mutableListOf<Exercise>()
+
+    private val months = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+    private var currentMonthIndex = Calendar.getInstance().get(Calendar.MONTH) // Initialize to the current month
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,6 +58,44 @@ class ProgressGraphsFragment : Fragment() {
         dateRange = view.findViewById(R.id.dateRange)
         dateRangeSelector = view.findViewById(R.id.btnSelectDateRange)
 
+        calendarRecyclerView = view.findViewById(R.id.calendar_recycler_view)
+
+        val gridLayoutManager = GridLayoutManager(requireContext(), 7)
+        calendarRecyclerView.layoutManager = gridLayoutManager
+
+        // Create a list of image resource IDs (35 items for 35 days)
+        val dayImages = MutableList(35) { R.drawable.yes_icon } // Use your actual image resource IDs
+        val dayVisibility = MutableList(35) { View.VISIBLE } // Initialize all days to visible
+
+        // Set the adapter
+        val adapter = CalendarAdapter(requireContext(), dayImages, dayVisibility)
+        calendarRecyclerView.adapter = adapter
+
+        // Call updateIconsForMonth to set the icons based on exercise data
+        updateIconsForMonth(adapter)
+
+        // Initialize buttons and month title
+        val btnPreviousMonth = view.findViewById<ImageButton>(R.id.btnPreviousMonth)
+        val btnNextMonth = view.findViewById<ImageButton>(R.id.btnNextMonth)
+        val monthTitle = view.findViewById<TextView>(R.id.monthTitle)
+
+        monthTitle.text = months[currentMonthIndex] // Set the initial month
+
+        btnPreviousMonth.setOnClickListener {
+            if (currentMonthIndex > 0) {
+                currentMonthIndex--
+                monthTitle.text = months[currentMonthIndex]
+                updateIconsForMonth(adapter)
+            }
+        }
+        btnNextMonth.setOnClickListener {
+            if (currentMonthIndex < months.size - 1) {
+                currentMonthIndex++
+                monthTitle.text = months[currentMonthIndex]
+                updateIconsForMonth(adapter)
+            }
+        }
+
         dateRangeSelector.setOnClickListener {
             showDateRangePickerDialog(this)
         }
@@ -57,6 +103,72 @@ class ProgressGraphsFragment : Fragment() {
         retrieveUsername()
 
         return view
+    }
+
+    // Utility method to get the number of days in the current month
+    private fun getDaysInMonth(year: Int, month: Int): Int {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, 1)
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+    }
+
+    // Utility method to get the starting day offset for the month
+    private fun getStartDayOffset(year: Int, month: Int): Int {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, 1)
+        return calendar.get(Calendar.DAY_OF_WEEK) - 1 // Calendar.DAY_OF_WEEK is 1-based (Sunday is 1)
+    }
+
+    private fun updateIconsForMonth(adapter: CalendarAdapter) {
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val daysInMonth = getDaysInMonth(currentYear, currentMonthIndex)
+        val startDayOffset = getStartDayOffset(currentYear, currentMonthIndex)
+        val totalDays = daysInMonth + startDayOffset // Total days to display including offset
+
+        val dayImages = MutableList(totalDays) { R.drawable.no_icon } // Adjusted size
+        val dayVisibility = MutableList(totalDays) { View.VISIBLE } // Initialize all days to visible
+
+        // Fetch and update the icons based on the exercises for the month
+        val calendar = Calendar.getInstance()
+        calendar.set(currentYear, currentMonthIndex, 1, 0, 0, 0)
+        val startDate = Timestamp(calendar.time)
+        calendar.set(currentYear, currentMonthIndex, daysInMonth, 23, 59, 59)
+        val endDate = Timestamp(calendar.time)
+
+        readExercisesData(startDate.toDate(), endDate.toDate()) { exercises ->
+            val exercisesByDate = exercises.groupBy { it.date }
+
+            for (i in 0 until daysInMonth) {
+                val index = i + startDayOffset
+                if (index < dayImages.size) {
+                    calendar.set(currentYear, currentMonthIndex, i + 1)
+                    val date = calendar.time
+
+                    // Use the java.util.Date as the key
+                    val exercisesForDay = exercisesByDate[Exercise.convertToGoogleDate(date)]
+
+                    // Check if any exercises for the day have goalsMet = true
+                    if (exercisesForDay != null && exercisesForDay.all { it.isGoalsMet }) {
+                        dayImages[index] = R.drawable.yes_icon // At least one goal met
+                        Log.w("index day true", index.toString() + "date: " + date)
+                    } else {
+                        dayImages[index] = R.drawable.no_icon // No goals met
+                        Log.w("index day false", index.toString() + "date: " + date)
+                    }
+                }
+            }
+
+            // Update day visibility
+            for (i in 0 until startDayOffset) {
+                dayVisibility[i] = View.GONE
+            }
+            for (i in startDayOffset + daysInMonth until totalDays) {
+                dayVisibility[i] = View.GONE
+            }
+
+            // Update the adapter with the new list
+            adapter.updateDayImages(dayImages, dayVisibility)
+        }
     }
 
     private fun retrieveUsername() {
@@ -307,6 +419,7 @@ class ProgressGraphsFragment : Fragment() {
                                                 val exerciseLoggedTime =
                                                     exerciseDocument.getLong("loggedTime")?.toDouble()
                                                         ?: 0.00
+                                                val exerciseGoalsMet = exerciseDocument.getBoolean("goalsMet") ?: false
 
                                                 val newExercise = Exercise(
                                                     exerciseID,
@@ -321,10 +434,12 @@ class ProgressGraphsFragment : Fragment() {
                                                     exerciseMax
                                                 )
 
-                                                if (exerciseList.none { it.exerciseID == newExercise.exerciseID }) {
-                                                    newExercise.loggedTime = exerciseLoggedTime
-                                                    exerciseList.add(newExercise)
-                                                }
+                                                // Add each exercise to the list directly
+                                                newExercise.loggedTime = exerciseLoggedTime
+                                                newExercise.isGoalsMet = exerciseGoalsMet
+                                                exerciseList.add(newExercise)
+
+                                                Log.w("testing", "date: " + newExercise.date.toString() + "\n" + newExercise.name + "\n goals met:" + newExercise.isGoalsMet.toString())
                                             }
                                         }
 
