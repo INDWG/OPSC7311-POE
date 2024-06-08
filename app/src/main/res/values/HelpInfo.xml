@@ -12,6 +12,7 @@
     <string name="help_title_progress_charts">Progress charts</string>
     <string name="help_title_view_workouts_and_exercises">View Workouts and exercises</string>
     <string name="help_title_edit_profile_page">Edit Profile Page</string>
+    <string name="help_title_progress_graph_page">Edit Profile Page</string>
 
     <string name="default_help_content">Default Return</string>
     <string name="help_content_home_page">If your home screen is unpopulated, head to the Workout Screen and create a new Workout Plan.
@@ -38,4 +39,9 @@ If your exercise screen is unpopulated select the start exercise button to add a
 \nThe monthly progress chart displays all days where the user logged a daily time that was between the daily min / max goals with a tick in the form of a calendar chart</string>
     <string name="help_content_view_workouts_and_exercises">Here users will choose between workouts or exercises and a date range to view (active / inactive) workouts or exercises between the desired date range. If workouts are chosen the total hours of logged time will be displayed </string>
     <string name="help_content_edit_profile_page">The Edit profile screen is used to change information details pertaining to you. Here you can add a profile picture, change you Name and Surname, set gender and birthday </string>
+    <string name="help_content_progress_graph_page">This is the Progress Chart Page where you can Select a Date Range and view:
+\nA Bar graph of your Daily Progress with the Total hours, Total Minimum and Maximum Goals and total Daily Time.
+\nA Monthly Progress Calendar that shows all the days you have met you daily fitness goal in that specific month.
+\nA Pie Chart that displays percentage of workouts done or not done for each day for a month.
+</string>
 </resources>

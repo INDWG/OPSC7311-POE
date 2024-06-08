@@ -43,6 +43,7 @@ class ProgressGraphsFragment : Fragment() {
     private lateinit var barChart: BarChart
     private lateinit var totalHoursTextView: TextView
     private lateinit var pieChart: PieChart
+    private lateinit var helpButton: Button
 
     private lateinit var calendarRecyclerView: RecyclerView
 
@@ -71,24 +72,20 @@ class ProgressGraphsFragment : Fragment() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 7)
         calendarRecyclerView.layoutManager = gridLayoutManager
 
-        // Create a list of image resource IDs (35 items for 35 days)
-        val dayImages = MutableList(35) { R.drawable.yes_icon } // Use your actual image resource IDs
-        val dayVisibility = MutableList(35) { View.VISIBLE } // Initialize all days to visible
+        val dayImages = MutableList(35) { R.drawable.yes_icon }
+        val dayVisibility = MutableList(35) { View.VISIBLE }
 
-        // Set the adapter
         val adapter = CalendarAdapter(requireContext(), dayImages, dayVisibility)
         calendarRecyclerView.adapter = adapter
 
-        // Call updateIconsForMonth to set the icons based on exercise data
         updateIconsForMonth(adapter)
         updatePieChartData()
 
-        // Initialize buttons and month title for the calendar
         val btnPreviousMonth = view.findViewById<ImageButton>(R.id.btnPreviousMonth)
         val btnNextMonth = view.findViewById<ImageButton>(R.id.btnNextMonth)
         val monthTitle = view.findViewById<TextView>(R.id.monthTitle)
 
-        monthTitle.text = months[currentMonthIndex] // Set the initial month
+        monthTitle.text = months[currentMonthIndex]
 
         btnPreviousMonth.setOnClickListener {
             if (currentMonthIndex > 0) {
@@ -105,12 +102,11 @@ class ProgressGraphsFragment : Fragment() {
             }
         }
 
-        // Initialize buttons and month title for the pie chart
         val btnPreviousMonthPie = view.findViewById<ImageButton>(R.id.btnPreviousMonthPie)
         val btnNextMonthPie = view.findViewById<ImageButton>(R.id.btnNextMonthPie)
         val monthTitlePie = view.findViewById<TextView>(R.id.monthTitlePie)
 
-        monthTitlePie.text = months[currentMonthIndexPie] // Set the initial month for the pie chart
+        monthTitlePie.text = months[currentMonthIndexPie]
 
         btnPreviousMonthPie.setOnClickListener {
             if (currentMonthIndexPie > 0) {
@@ -134,6 +130,30 @@ class ProgressGraphsFragment : Fragment() {
         retrieveUsername()
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        helpButton = view.findViewById(R.id.btnHelp)
+        helpButton.setOnClickListener {
+            btnHelpClicked()
+        }
+    }
+
+    private fun btnHelpClicked()
+    {
+        navigateToFragment(
+            HelpFragment(
+                "help_title_progress_graph_page",
+                "help_content_progress_graph_page",
+                requireContext()
+            )
+        )
+    }
+
+    private fun navigateToFragment(fragment: Fragment)
+    {
+        parentFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 
     private fun updatePieChartData() {
@@ -167,9 +187,9 @@ class ProgressGraphsFragment : Fragment() {
 
             val data = PieData(dataSet)
             pieChart.data = data
-            pieChart.isDrawHoleEnabled = true // Enable the hole in the center
-            pieChart.holeRadius = 40f // Adjust the radius to make the hole smaller
-            pieChart.setHoleColor(Color.TRANSPARENT) // Set the color of the hole to transparent
+            pieChart.isDrawHoleEnabled = true
+            pieChart.holeRadius = 40f
+            pieChart.setHoleColor(Color.TRANSPARENT)
             pieChart.setUsePercentValues(true)
             pieChart.description.isEnabled = false
             pieChart.legend.apply {
