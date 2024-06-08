@@ -1,6 +1,15 @@
 # ProActive: Taking Charge Through Healthy Habits!
 ![Logo for pro](https://github.com/INDWG/OPSC7311-POE/assets/92745810/cca305bd-a969-4e85-af20-0d17f394f95a)
 
+## Table of Contents
+
+1. [Features](#features)
+2. [Installation](#installation)
+1. [Usage](#usage)
+2. [Support](#support)
+2. [Video Demonstration](#video-demonstartion)
+3. [Authors](#authors)
+
 ## Features
 
 - **Login**: Users are able to log into the app using an Username(email) & Password.
