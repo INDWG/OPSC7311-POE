@@ -72,7 +72,7 @@ For support, please email TeamProActive225@gmail.com
 
 [Part 2](https://youtu.be/1pTOvOUIwjE)
 
-[Part 3 Final](https://www.youtube.com/watch?v=Hp4HveieMoE)
+[Part 3 Final](https://youtu.be/Krcgxu2s83o)
 
 ## Figma
 
