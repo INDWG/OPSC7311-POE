@@ -73,11 +73,10 @@ For support, please email TeamProActive225@gmail.com
 
 [Part 2](https://youtu.be/1pTOvOUIwjE)
 
-[Part 3 Final](https://youtu.be/Krcgxu2s83o)
 
 ## Figma
 
-[Figma Prototype Link](https://www.figma.com/design/eI1s7gijrcDyq7rXr9v3j5/ProActive-Prototype?node-id=0-1&t=VmzsIfQYZepJAoTx-0)
+[Figma Prototype Link](https://www.figma.com/design/eI1s7gijrcDyq7rXr9v3j5/OPSC?node-id=615-1352&t=jbwTeSKWsHo7zC4t-1))
 
 ## Authors
 
