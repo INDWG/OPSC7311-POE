@@ -76,7 +76,7 @@ For support, please email TeamProActive225@gmail.com
 
 ## Figma
 
-[Figma Prototype Link](https://www.figma.com/design/eI1s7gijrcDyq7rXr9v3j5/OPSC?node-id=615-1352&t=jbwTeSKWsHo7zC4t-1))
+[Figma Prototype Link](https://www.figma.com/design/eI1s7gijrcDyq7rXr9v3j5/OPSC?node-id=615-1352&t=jbwTeSKWsHo7zC4t-1)
 
 ## Authors
 
