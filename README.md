@@ -1,5 +1,6 @@
-# ProActive: Taking Charge Through Healthy Habits!
-![Logo for pro](https://github.com/INDWG/OPSC7311-POE/assets/92745810/cca305bd-a969-4e85-af20-0d17f394f95a)
+# EasyA: Taking Charge Through Healthy Habits!
+![Frame 121](https://github.com/user-attachments/assets/f84890cb-514c-4db9-ba08-305aacbbe40b)
+
 
 ## Table of Contents
 
