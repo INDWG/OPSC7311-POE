@@ -1,4 +1,4 @@
-# EasyA: Taking Charge Through Healthy Habits!
+# EasyA: Pass With Flying Colours
 ![Frame 121](https://github.com/user-attachments/assets/f84890cb-514c-4db9-ba08-305aacbbe40b)
 
 
